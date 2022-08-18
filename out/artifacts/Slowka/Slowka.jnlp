@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Slowka.jnlp">
+    <information>
+        <title>HelloApplication</title>
+        <vendor>Unknown</vendor>
+        <description>HelloApplication</description>
+        <offline-allowed/>
+    </information>
+    <update check="background"/>
+    <resources>
+        <j2se version="11.0.16.1+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="Slowka.jar" size="3217" download="eager"/>
+    </resources>
+    <jfx:javafx-desc width="600" height="400" main-class="com.arek.HelloApplication" name="HelloApplication"/>
+</jnlp>
+

@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Slowka">
+    <output-path>$PROJECT_DIR$/out/artifacts/Slowka</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="com.arek.HelloApplication" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="Slowka.jar">
+        <element id="module-output" name="Slowka" />
+      </element>
+    </root>
+  </artifact>
+</component>
