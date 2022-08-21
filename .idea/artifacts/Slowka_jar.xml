@@ -78,6 +78,8 @@
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/ucrtbase.dll" />
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/vcruntime140.dll" />
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/vcruntime140_1.dll" />
+      <element id="file-copy" path="D:/JavaFXTrayIcon library/FXTrayIcon-3.3.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/icon.png" />
     </root>
   </artifact>
 </component>
