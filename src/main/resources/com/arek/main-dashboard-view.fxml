@@ -21,7 +21,7 @@
          <content>
             <VBox alignment="CENTER">
                <children>
-                  <ToolBar prefHeight="21.0" prefWidth="720.0">
+                  <ToolBar prefHeight="0.0" prefWidth="720.0">
                      <items>
                         <Button mnemonicParsing="false" text="Start" />
                         <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="20.0" orientation="VERTICAL" prefHeight="20.0" prefWidth="0.0" />
@@ -30,7 +30,7 @@
                   </ToolBar>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <HBox alignment="CENTER" layoutX="339.0" layoutY="10.0" prefHeight="51.0" prefWidth="720.0">
+                        <HBox alignment="CENTER" fillHeight="false" layoutX="339.0" layoutY="10.0" prefHeight="249.0" prefWidth="720.0">
                            <children>
                               <Label prefHeight="35.0" prefWidth="198.0" text="Czas:    00:00:00">
                                  <font>
@@ -42,7 +42,7 @@
                      </children>
                   </HBox>
                   <Separator prefWidth="200.0" />
-                  <GridPane prefHeight="317.0" prefWidth="720.0">
+                  <GridPane prefHeight="292.0" prefWidth="720.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -68,7 +68,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <TextField fx:id="translationField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -78,8 +78,8 @@
                         </TextField>
                      </children>
                   </GridPane>
-                  <Button mnemonicParsing="false" text="Sprawdź" />
-                  <Label text="OK!">
+                  <Button mnemonicParsing="false" onAction="#checkIfCorrect" text="Sprawdź" />
+                  <Label fx:id="messageLabel" text="OK!">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
