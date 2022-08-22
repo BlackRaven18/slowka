@@ -7,6 +7,7 @@ module com.arek{
     requires org.kordamp.bootstrapfx.core;
     requires FXTrayIcon;
     requires java.sql;
+    requires java.desktop;
 
 
     opens com.arek to javafx.fxml;
