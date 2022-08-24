@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -21,18 +23,35 @@
          <content>
             <VBox alignment="CENTER">
                <children>
-                  <ToolBar prefHeight="0.0" prefWidth="720.0">
+                  <ToolBar prefHeight="0.0" prefWidth="720.0" VBox.vgrow="NEVER">
                      <items>
-                        <Button mnemonicParsing="false" text="Start" />
+                        <Button fx:id="startClockButton" mnemonicParsing="false" onAction="#startClock" text="Start" />
                         <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="20.0" orientation="VERTICAL" prefHeight="20.0" prefWidth="0.0" />
-                        <Button disable="true" mnemonicParsing="false" text="Stop" />
+                        <Button fx:id="stopClockButton" disable="true" mnemonicParsing="false" onAction="#stopClock" text="Stop" />
+                        <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="30.0" />
+                        <MenuButton fx:id="selectLanguageMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Hiszpański">
+                          <items>
+                            <MenuItem fx:id="spanishLanguageItem" mnemonicParsing="false" onAction="#selectSpanishLanguage" text="Hiszpański" />
+                            <MenuItem fx:id="englishLanguageItem" mnemonicParsing="false" onAction="#selectEnglishLanguage" text="Angielski" />
+                          </items>
+                        </MenuButton>
+                        <Label fx:id="translationOrderLabel" alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="121.0" text="Hiszpańsko - Polski" />
+                        <Button mnemonicParsing="false" onAction="#changeTranslationOrder" text="zmień" />
                      </items>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </ToolBar>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <HBox alignment="CENTER" fillHeight="false" layoutX="339.0" layoutY="10.0" prefHeight="249.0" prefWidth="720.0">
                            <children>
-                              <Label prefHeight="35.0" prefWidth="198.0" text="Czas:    00:00:00">
+                              <Label text="Czas:  ">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="clockLabel" prefHeight="35.0" prefWidth="108.0" text="00:00:00">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -68,7 +87,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="translationField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
                               <Font size="18.0" />
                            </font>

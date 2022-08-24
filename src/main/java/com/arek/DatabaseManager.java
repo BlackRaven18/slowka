@@ -14,6 +14,10 @@ public class DatabaseManager {
             "FROM slowo sl, tlumaczenie tl\n" +
             "WHERE sl.id_slowa = tl.id_slowa;\n";
 
+    private static final String GET_WORDS_WITH_TRANSLATIONS_REVERSE = "SELECT tl.tlumaczenie, sl.slowo\n" +
+            "FROM slowo sl, tlumaczenie tl\n" +
+            "WHERE sl.id_slowa = tl.id_slowa;\n";
+
     public static int getWordsNumber(){
         int wordsNumber = 0;
 
@@ -28,12 +32,19 @@ public class DatabaseManager {
         return wordsNumber;
     }
 
-    public static HashMap<String, ArrayList<String>> getWordsAndTranslations(){
+    public static HashMap<String, ArrayList<String>> getWordsAndTranslations(TranslationOrder order){
         HashMap<String, ArrayList<String>> wordsAndTranslations = new HashMap<>();
+        String querry;
+
+        if(order == TranslationOrder.NORMAL){
+            querry = GET_WORDS_WITH_TRANSLATIONS;
+        } else {
+            querry = GET_WORDS_WITH_TRANSLATIONS_REVERSE;
+        }
 
         try (Connection connection = DriverManager.getConnection(URL);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(GET_WORDS_WITH_TRANSLATIONS)){
+             ResultSet resultSet = statement.executeQuery(querry)){
             while (resultSet.next()){
 
                 ArrayList<String> translationList;
@@ -47,8 +58,6 @@ public class DatabaseManager {
                 translationList.add(resultSet.getString(2));
                 wordsAndTranslations.put(resultSet.getString(1), translationList);
             }
-            //TODO: delete  this
-            System.out.println(wordsAndTranslations);
 
         }catch (SQLException e){
             System.err.println("GET_WORDS_WITH_TRANSLATIONS ERROR!");

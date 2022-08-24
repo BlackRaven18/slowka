@@ -13,6 +13,7 @@ import java.io.IOException;
 import com.dustinredmond.fxtrayicon.FXTrayIcon;
 
 public class Main extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-dashboard-view.fxml"));
@@ -33,9 +34,21 @@ public class Main extends Application {
         stage.setMinHeight(400);
         stage.setScene(scene);
         stage.show();
+
+        // clock stage
+        ClockManager clockManager = ClockManager.getInstance();
+        clockManager.setStage(stage);
+
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
 
+        ClockManager clockManager = ClockManager.getInstance();
+        clockManager.stopClock();
+
+    }
 
     public static void main(String[] args) {
         launch();

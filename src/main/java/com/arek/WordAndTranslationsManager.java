@@ -5,14 +5,16 @@ import java.util.*;
 public class WordAndTranslationsManager {
     private HashMap<String, ArrayList<String>> wordsAndTranslations;
     private ArrayList<String> wordsAndTranslationsKeys;
+    private TranslationOrder translationOrder;
 
 
-    public WordAndTranslationsManager(){
+    public WordAndTranslationsManager(TranslationOrder order){
+        this.translationOrder = order;
         loadWordsAndTranslations();
     }
 
     private void loadWordsAndTranslations(){
-        wordsAndTranslations = DatabaseManager.getWordsAndTranslations();
+        wordsAndTranslations = DatabaseManager.getWordsAndTranslations(translationOrder);
         loadWordsAndTranslationsKeys();
     }
 
@@ -60,6 +62,13 @@ public class WordAndTranslationsManager {
         }
     }
 
+    public void changeTranslationOrder(TranslationOrder order){
+        this.translationOrder = order;
+        loadWordsAndTranslations();
+        loadWordsAndTranslationsKeys();
+
+    }
+
     public HashMap<String, ArrayList<String>> getWordsAndTranslations() {
         return wordsAndTranslations;
     }
@@ -67,4 +76,9 @@ public class WordAndTranslationsManager {
     public ArrayList<String> getWordsAndTranslationsKeys() {
         return wordsAndTranslationsKeys;
     }
+
+    public TranslationOrder getTranslationOrder() {
+        return translationOrder;
+    }
+
 }
