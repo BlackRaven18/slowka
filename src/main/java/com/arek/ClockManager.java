@@ -1,6 +1,7 @@
 package com.arek;
 
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -12,11 +13,13 @@ public class ClockManager {
 
     private static ClockManager instance;
 
+    private boolean isClockRunning;
+
+    private Button startButton, stopButton;
+
     private final long DELAY = 1000;
     private final long PERIOD = 1000;
     private final int CLOCK_TIME = 5;
-
-
 
     private TimerTask showRemainingTime;
     private TimerTask showWindow;
@@ -30,6 +33,7 @@ public class ClockManager {
     private int remainingTime = CLOCK_TIME;
 
     private ClockManager(){
+        isClockRunning = false;
         showRemainingTimeTimer = new Timer();
         showWindowTimer = new Timer();
     }
@@ -40,6 +44,23 @@ public class ClockManager {
         }
 
         return instance;
+    }
+
+    public void prepareClock(Label clockLabel, Button startButton, Button stopButton){
+        this.clockLabel = clockLabel;
+        this.startButton = startButton;
+        this.stopButton = stopButton;
+    }
+
+    private void manageButtons(){
+
+        if(isClockRunning){
+            startButton.setDisable(true);
+            stopButton.setDisable(false);
+        } else {
+            startButton.setDisable(false);
+            stopButton.setDisable(true);
+        }
     }
 
     public void startShowingRemainingTime(){
@@ -83,23 +104,36 @@ public class ClockManager {
     }
 
     public void startClock(){
-        remainingTime = CLOCK_TIME;
-        getNewTimers();
+        isClockRunning = true;
 
+        manageButtons();
+
+        remainingTime = CLOCK_TIME;
+
+        getNewTimers();
         startShowingRemainingTime();
         startShowingWindowPeriodically();
     }
 
     public void stopClock(){
+        isClockRunning = false;
+
+        manageButtons();
+
         clockLabel.setText("00:00:00");
-        showRemainingTimeTimer.cancel();
-        showWindowTimer.cancel();
+
+        stopTimers();
     }
 
     private void getNewTimers(){
-        stopClock();
+        stopTimers();
         showRemainingTimeTimer = new Timer();
         showWindowTimer = new Timer();
+    }
+
+    private void stopTimers(){
+        showRemainingTimeTimer.cancel();
+        showWindowTimer.cancel();
     }
 
     public Label getClockLabel() {

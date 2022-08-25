@@ -35,7 +35,7 @@ public class MainDashboardController implements Initializable {
         loadWordLabel();
 
         clockManager = ClockManager.getInstance();
-        clockManager.setClockLabel(clockLabel);
+        clockManager.prepareClock(clockLabel, startClockButton, stopClockButton);
 
     }
 
@@ -80,17 +80,11 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void startClock(){
-        startClockButton.setDisable(true);
-        stopClockButton.setDisable(false);
         clockManager.startClock();
-
-
     }
 
     @FXML
     public void stopClock(){
-        startClockButton.setDisable(false);
-        stopClockButton.setDisable(true);
         clockManager.stopClock();
     }
 
