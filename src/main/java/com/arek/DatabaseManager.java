@@ -6,7 +6,10 @@ import java.util.HashMap;
 
 public class DatabaseManager {
 
-    private static final String URL = "jdbc:sqlite:wordsdatabase.db";
+    private static final String SPANISH_POLISH_DATABASE_URL = "jdbc:sqlite:database/spanish-polish.db";
+    private static final String ENGLISH_POLISH_DATABASE_URL = "jdbc:sqlite:database/english-polish.db";
+
+    private static String databaseURL = SPANISH_POLISH_DATABASE_URL;
 
     private static final String GET_WORDS_NUMBER_QUERRY = "SELECT COUNT(*) FROM SLOWO;";
     private static final String GET_WORDS_QUERRY = "SELECT slowo FROM SLOWO;";
@@ -21,7 +24,7 @@ public class DatabaseManager {
     public static int getWordsNumber(){
         int wordsNumber = 0;
 
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DriverManager.getConnection(databaseURL);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(GET_WORDS_NUMBER_QUERRY)){
             wordsNumber = resultSet.getInt(1);
@@ -42,7 +45,7 @@ public class DatabaseManager {
             querry = GET_WORDS_WITH_TRANSLATIONS_REVERSE;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DriverManager.getConnection(databaseURL);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(querry)){
             while (resultSet.next()){
@@ -63,7 +66,13 @@ public class DatabaseManager {
             System.err.println("GET_WORDS_WITH_TRANSLATIONS ERROR!");
         }
 
-
         return wordsAndTranslations;
+    }
+
+    public static void changeToSpanish(){
+        databaseURL = SPANISH_POLISH_DATABASE_URL;
+    }
+    public static void changeToEnglish(){
+        databaseURL = ENGLISH_POLISH_DATABASE_URL;
     }
 }

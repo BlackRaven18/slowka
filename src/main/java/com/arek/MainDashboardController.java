@@ -31,7 +31,7 @@ public class MainDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        wordAndTranslationsManager = new WordAndTranslationsManager(TranslationOrder.NORMAL);
+        wordAndTranslationsManager = new WordAndTranslationsManager(Languages.SPANISH, TranslationOrder.NORMAL, translationOrderLabel);
         loadWordLabel();
 
         messageLabel.setText("");
@@ -74,11 +74,9 @@ public class MainDashboardController implements Initializable {
         if(translationOrder == TranslationOrder.NORMAL){
             wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.REVERSE);
             loadWordLabel();
-            translationOrderLabel.setText("Polsko - Hiszpański");
         } else{
             wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.NORMAL);
             loadWordLabel();
-            translationOrderLabel.setText("Hiszpańsko - Polski");
         }
     }
 
@@ -105,11 +103,15 @@ public class MainDashboardController implements Initializable {
     @FXML
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
+        wordAndTranslationsManager.selectSpanishLanguage();
+        loadWordLabel();
     }
 
     @FXML
     public void selectEnglishLanguage(){
         selectLanguageMenu.setText("Angielski");
+        wordAndTranslationsManager.selectEnglishLanguage();
+        loadWordLabel();
     }
 }
 

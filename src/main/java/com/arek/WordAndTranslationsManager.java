@@ -1,23 +1,44 @@
 package com.arek;
 
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
+
 import java.util.*;
 
 public class WordAndTranslationsManager {
     private HashMap<String, ArrayList<String>> wordsAndTranslations;
     private ArrayList<String> wordsAndTranslationsKeys;
     private TranslationOrder translationOrder;
+    private Languages selectedLanguage;
+    private Label translationOrderLabel;
 
 
-    public WordAndTranslationsManager(TranslationOrder order){
+    public WordAndTranslationsManager(Languages language, TranslationOrder order, Label translationOrderLabel){
+        this.selectedLanguage = language;
         this.translationOrder = order;
+        this.translationOrderLabel = translationOrderLabel;
         loadWordsAndTranslations();
     }
 
     private void loadWordsAndTranslations(){
+
+        switch(selectedLanguage){
+            case SPANISH:
+                DatabaseManager.changeToSpanish();
+                break;
+            case ENGLISH:
+                DatabaseManager.changeToEnglish();
+                break;
+            default:
+                DatabaseManager.changeToSpanish();
+                break;
+        }
+
+        updateTranslationOrderLabel();
+
         wordsAndTranslations = DatabaseManager.getWordsAndTranslations(translationOrder);
         loadWordsAndTranslationsKeys();
     }
-
 
     private void loadWordsAndTranslationsKeys(){
         wordsAndTranslationsKeys = new ArrayList<>(wordsAndTranslations.keySet());
@@ -64,9 +85,36 @@ public class WordAndTranslationsManager {
 
     public void changeTranslationOrder(TranslationOrder order){
         this.translationOrder = order;
-        loadWordsAndTranslations();
-        loadWordsAndTranslationsKeys();
+        updateTranslationOrderLabel();
 
+        loadWordsAndTranslations();
+    }
+
+    private void updateTranslationOrderLabel(){
+        switch(selectedLanguage){
+            case SPANISH:
+                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Hiszpańsko - Polski");
+                else translationOrderLabel.setText("Polsko - Hiszpański");
+                break;
+            case ENGLISH:
+                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Angielsko - Polski");
+                else translationOrderLabel.setText("Polsko - Angielski");
+                break;
+            default:
+                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Hiszpańsko - Polski");
+                else translationOrderLabel.setText("Polsko - Hiszpański");
+                break;
+        }
+    }
+
+    public void selectSpanishLanguage(){
+        selectedLanguage = Languages.SPANISH;
+        loadWordsAndTranslations();
+    }
+
+    public void selectEnglishLanguage(){
+        selectedLanguage = Languages.ENGLISH;
+        loadWordsAndTranslations();
     }
 
     public HashMap<String, ArrayList<String>> getWordsAndTranslations() {
