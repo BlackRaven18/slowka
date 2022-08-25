@@ -17,15 +17,20 @@ public class ClockManager {
 
     private Button startButton, stopButton;
 
+    private final int CLOCK_TIME = 20;
     private final long DELAY = 1000;
     private final long PERIOD = 1000;
-    private final int CLOCK_TIME = 5;
+    private final long SHOW_WINDOW_DELAY = 1000 * CLOCK_TIME;
+    private final long HIDE_WINDOW_DELAY = 100;
+
 
     private TimerTask showRemainingTime;
     private TimerTask showWindow;
+    private TimerTask hideWindow;
 
     private Timer showRemainingTimeTimer;
     private Timer showWindowTimer;
+    private Timer hideWindowTimer;
 
     private Label clockLabel;
     private Stage stage;
@@ -36,6 +41,7 @@ public class ClockManager {
         isClockRunning = false;
         showRemainingTimeTimer = new Timer();
         showWindowTimer = new Timer();
+        hideWindowTimer = new Timer();
     }
 
     public static ClockManager getInstance(){
@@ -70,7 +76,6 @@ public class ClockManager {
             public void run() {
                 Platform.runLater(() ->{
                     int time = setTime();
-                    System.out.println(time);
 
                     String timeFormat = String.format("00:00:%02d", time);
                     clockLabel.setText(timeFormat);
@@ -99,9 +104,25 @@ public class ClockManager {
                 });
             }
         };
-        showWindowTimer.schedule(showWindow, DELAY * remainingTime);
-
+        showWindowTimer.schedule(showWindow, SHOW_WINDOW_DELAY);
     }
+
+    public void startHidingWindow(){
+        hideWindow = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() ->{
+                    // hiding window
+                    //stage.hide();
+                    stage.setIconified(true);
+                });
+            }
+        };
+
+        hideWindowTimer.schedule(hideWindow, HIDE_WINDOW_DELAY);
+    }
+
+
 
     public void startClock(){
         isClockRunning = true;
@@ -113,6 +134,7 @@ public class ClockManager {
         getNewTimers();
         startShowingRemainingTime();
         startShowingWindowPeriodically();
+        startHidingWindow();
     }
 
     public void stopClock(){
@@ -129,11 +151,13 @@ public class ClockManager {
         stopTimers();
         showRemainingTimeTimer = new Timer();
         showWindowTimer = new Timer();
+        hideWindowTimer = new Timer();
     }
 
     private void stopTimers(){
         showRemainingTimeTimer.cancel();
         showWindowTimer.cancel();
+        hideWindowTimer.cancel();
     }
 
     public Label getClockLabel() {
@@ -146,5 +170,9 @@ public class ClockManager {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public boolean isClockRunning() {
+        return isClockRunning;
     }
 }

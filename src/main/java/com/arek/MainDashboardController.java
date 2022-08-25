@@ -34,25 +34,29 @@ public class MainDashboardController implements Initializable {
         wordAndTranslationsManager = new WordAndTranslationsManager(TranslationOrder.NORMAL);
         loadWordLabel();
 
+        messageLabel.setText("");
+
         clockManager = ClockManager.getInstance();
         clockManager.prepareClock(clockLabel, startClockButton, stopClockButton);
 
     }
 
-
     private void loadWordLabel(){
-
         wordLabel.setText(wordAndTranslationsManager.getRandomWord());
     }
 
     @FXML
     public void checkIfCorrect(){
 
-        //if true
         if(wordAndTranslationsManager.checkTranslation(wordLabel.getText(), translationField.getText())){
             messageLabel.setText("OK!!!");
             translationField.setText("");
             loadWordLabel();
+
+            if(clockManager.isClockRunning()){
+                startClock();
+            }
+
         } else{
             messageLabel.setText("NIE OK!!!");
         }
@@ -87,6 +91,8 @@ public class MainDashboardController implements Initializable {
     public void stopClock(){
         clockManager.stopClock();
     }
+
+
 
     @FXML
     public void ifEnterPressedThenCheckIfCorrect(KeyEvent event){
