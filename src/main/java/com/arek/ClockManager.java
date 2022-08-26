@@ -56,6 +56,9 @@ public class ClockManager {
         this.clockLabel = clockLabel;
         this.startButton = startButton;
         this.stopButton = stopButton;
+
+        String timeFormat = String.format("00:00:%02d", CLOCK_TIME);
+        this.clockLabel.setText(timeFormat);
     }
 
     private void manageButtons(){
@@ -142,7 +145,8 @@ public class ClockManager {
 
         manageButtons();
 
-        clockLabel.setText("00:00:00");
+        String timeFormat = String.format("00:00:%02d", CLOCK_TIME);
+        clockLabel.setText(timeFormat);
 
         stopTimers();
     }
