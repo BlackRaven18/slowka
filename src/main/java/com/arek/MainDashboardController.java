@@ -1,6 +1,5 @@
 package com.arek;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -8,15 +7,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainDashboardController implements Initializable {
 
 
-
     // ****************************************************
-    // Translation Tab
+    // Translation Tab variables
     // ****************************************************
     private WordAndTranslationsManager wordAndTranslationsManager;
     private ClockManager clockManager;
@@ -24,8 +21,13 @@ public class MainDashboardController implements Initializable {
     @FXML private Label wordLabel, messageLabel, translationOrderLabel, clockLabel;
     @FXML private TextField translationField;
     @FXML private MenuButton selectLanguageMenu;
-    @FXML private MenuItem spanishLanguageItem, englishLanguageItem;
     @FXML private Button startClockButton, stopClockButton;
+
+
+
+    // ****************************************************
+    // Add New Words Tab variables
+    // ****************************************************
 
 
 
@@ -40,6 +42,12 @@ public class MainDashboardController implements Initializable {
         clockManager.prepareClock(clockLabel, startClockButton, stopClockButton);
 
     }
+
+
+
+    // ****************************************************
+    // Translation Tab methods
+    // ****************************************************
 
     private void loadWordLabel(){
         wordLabel.setText(wordAndTranslationsManager.getRandomWord());
@@ -90,15 +98,12 @@ public class MainDashboardController implements Initializable {
         clockManager.stopClock();
     }
 
-
-
     @FXML
     public void ifEnterPressedThenCheckIfCorrect(KeyEvent event){
         if(event.getCode().equals(KeyCode.ENTER)){
             checkIfCorrect();
         }
     }
-
 
     @FXML
     public void selectSpanishLanguage(){
