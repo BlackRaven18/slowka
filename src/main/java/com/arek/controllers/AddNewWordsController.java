@@ -34,6 +34,12 @@ public class AddNewWordsController implements Initializable {
         initiateWordsAndTranslationsTableView();
     }
 
+    public void restartTab(){
+        System.out.println("bebe");
+        messageLabel.setText("iiiga");
+        selectSpanishLanguage();
+    }
+
     private void initiateWordsAndTranslationsTableView(){
         wordsAndTranslationsTable.getItems().clear();
         ArrayList<WordAndTranslation> wordAndTranslationList = DatabaseManager.getWordsAndTranslationsAsList(TranslationOrder.NORMAL);
@@ -59,6 +65,18 @@ public class AddNewWordsController implements Initializable {
         DatabaseManager.changeToEnglish();
         initiateWordsAndTranslationsTableView();
     }
+    @FXML
+    private void selectWordTranslationTableRow(){
+        int index = wordsAndTranslationsTable.getSelectionModel().getSelectedIndex();
+
+        if(index < 0){
+            return;
+        }
+
+        wordField.setText(wordsColumn.getCellData(index));
+        translationField.setText(translationsColumn.getCellData(index));
+    }
+
 
     @FXML
     public void addNewWord(){
@@ -67,7 +85,7 @@ public class AddNewWordsController implements Initializable {
 
         DatabaseManager.addWordWithTranslation(new WordAndTranslation(word, translation));
         initiateWordsAndTranslationsTableView();
-        wordsAndTranslationsTable.refresh();
+        //wordsAndTranslationsTable.refresh();
 
         messageLabel.setText("Dodano nowe słówko");
         wordField.setText("");
@@ -76,7 +94,16 @@ public class AddNewWordsController implements Initializable {
 
     @FXML
     public void deleteWord(){
+        if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
+            DatabaseManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
 
+            initiateWordsAndTranslationsTableView();
+            //wordsAndTranslationsTable.refresh();
+
+            messageLabel.setText("Usunięto słówko");
+            wordField.setText("");
+            translationField.setText("");
+        }
     }
 
     @FXML

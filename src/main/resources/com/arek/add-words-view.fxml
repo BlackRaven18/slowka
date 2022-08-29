@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainVBox" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.AddNewWordsController">
+<VBox fx:id="addNewWords" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.AddNewWordsController">
    <children>
       <HBox prefHeight="473.0" prefWidth="720.0">
          <children>
@@ -77,7 +77,7 @@
                   </Label>
                </children>
             </VBox>
-            <TableView fx:id="wordsAndTranslationsTable" prefHeight="431.0" prefWidth="673.0">
+            <TableView fx:id="wordsAndTranslationsTable" onMouseClicked="#selectWordTranslationTableRow" prefHeight="431.0" prefWidth="673.0">
                <columns>
                   <TableColumn fx:id="wordsColumn" prefWidth="75.0" text="Słówko" />
                   <TableColumn fx:id="translationsColumn" prefWidth="75.0" text="Tłumaczenie" />

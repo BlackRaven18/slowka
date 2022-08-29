@@ -1,15 +1,14 @@
 package com.arek.controllers;
 
-import com.arek.language_learning_app.ClockManager;
-import com.arek.language_learning_app.Languages;
-import com.arek.language_learning_app.TranslationOrder;
-import com.arek.language_learning_app.WordAndTranslationsManager;
+import com.arek.language_learning_app.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,6 +20,9 @@ public class MainDashboardController implements Initializable {
     // ****************************************************
     private WordAndTranslationsManager wordAndTranslationsManager;
     private ClockManager clockManager;
+
+    @FXML
+    private AddNewWordsController addNewWordsController;
 
     @FXML private Label wordLabel, messageLabel, translationOrderLabel, clockLabel;
     @FXML private TextField translationField;
@@ -37,6 +39,7 @@ public class MainDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         wordAndTranslationsManager = new WordAndTranslationsManager(Languages.SPANISH, TranslationOrder.NORMAL, translationOrderLabel);
         loadWordLabel();
 
@@ -44,7 +47,6 @@ public class MainDashboardController implements Initializable {
 
         clockManager = ClockManager.getInstance();
         clockManager.prepareClock(clockLabel, startClockButton, stopClockButton);
-
     }
 
 
@@ -123,6 +125,8 @@ public class MainDashboardController implements Initializable {
     @FXML
     public void onAddWordsTabChange(){
         clockManager.stopClock();
+        addNewWordsController.restartTab();
+
     }
 
     @FXML

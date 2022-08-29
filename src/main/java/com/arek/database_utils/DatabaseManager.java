@@ -5,6 +5,7 @@ import com.arek.language_learning_app.TranslationOrder;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 public class DatabaseManager {
 
@@ -129,11 +130,78 @@ public class DatabaseManager {
             addNewTranslation(newWordId, wordWithTranslation.getTranslation());
 
         } else {
-
             addNewWord(wordWithTranslation.getWord());
             newWordId = getWordId(wordWithTranslation.getWord());
             addNewTranslation(newWordId, wordWithTranslation.getTranslation());
         }
+    }
+
+    public static void deleteWordWithTranslation(WordAndTranslation wordAndTranslation){
+        WordAndTranslationRowNumbers wordAndTranslationRowNumbers = getWordAndTranslationRowsNumbers(wordAndTranslation);
+
+        String deleteTranslationQuerry = String.format("DELETE FROM TLUMACZENIE WHERE ROWID = %d;", wordAndTranslationRowNumbers.getTranslationWordNumber());
+        String deleteWordQuerry = String.format("DELETE FROM SLOWO WHERE ROWID = %d;", wordAndTranslationRowNumbers.getWordRowNumber());
+
+        int numberOfWordTranslations = getWordNumberOfTranslations(wordAndTranslation.getWord());
+
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement()){
+            statement.executeUpdate(deleteTranslationQuerry);
+
+            if(numberOfWordTranslations == 1) {
+                statement.executeUpdate(deleteWordQuerry);
+            }
+
+        }catch (SQLException e){
+            System.err.println("DELETE_WORD_WITH_TRANSLATION ERROR!");
+        }
+    }
+
+    public static int getWordNumberOfTranslations(String word){
+        int numberOfTranslations = -1;
+
+        String querry = String.format("SELECT COUNT(*)" +
+                " FROM SLOWO sl, TLUMACZENIE tl" +
+                " WHERE sl.id_slowa = tl.id_slowa" +
+                " AND sl.slowo = '%s';", word);
+
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(querry)){
+
+            while(resultSet.next()){
+                numberOfTranslations = resultSet.getInt(1);
+            }
+
+        }catch (SQLException e){
+            System.err.println("GET_WORDS_NUMBER_QUERRY ERROR!");
+        }
+
+        return numberOfTranslations;
+    }
+
+    public static WordAndTranslationRowNumbers getWordAndTranslationRowsNumbers(WordAndTranslation wordAndTranslation){
+        String querry = String.format("SELECT sl.ROWID, tl.ROWID " +
+                "FROM SLOWO sl, TLUMACZENIE tl " +
+                "WHERE sl.id_slowa = tl.id_slowa " +
+                "AND sl.slowo = '%s' " +
+                "AND tl.tlumaczenie = '%s';",
+                wordAndTranslation.getWord(), wordAndTranslation.getTranslation());
+
+        WordAndTranslationRowNumbers wordAndTranslationRowNumbers = new WordAndTranslationRowNumbers();
+
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(querry)){
+
+            while (resultSet.next()){
+                wordAndTranslationRowNumbers = new WordAndTranslationRowNumbers(resultSet.getInt(1), resultSet.getInt(2));
+            }
+
+        }catch (SQLException e){
+            System.err.println("GET_WORD_AND_TRANSLATION_ROWS_NUMBER ERROR!");
+        }
+        return wordAndTranslationRowNumbers;
     }
 
     private static void addNewWord(String word){

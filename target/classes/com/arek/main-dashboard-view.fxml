@@ -111,7 +111,7 @@
          </content></Tab>
     <Tab onSelectionChanged="#onAddWordsTabChange" text="Dodaj słówka">
          <content>
-             <fx:include fx:id="mainVBox" source="add-words-view.fxml" />
+             <fx:include fx:id="addNewWords" source="add-words-view.fxml" />
          </content></Tab>
       <Tab text="Opcje" />
   </tabs>
