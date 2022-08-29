@@ -1,5 +1,9 @@
-package com.arek;
+package com.arek.controllers;
 
+import com.arek.language_learning_app.ClockManager;
+import com.arek.language_learning_app.Languages;
+import com.arek.language_learning_app.TranslationOrder;
+import com.arek.language_learning_app.WordAndTranslationsManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -106,6 +110,11 @@ public class MainDashboardController implements Initializable {
     }
 
     @FXML
+    public void onAddWordsTabChange(){
+        clockManager.stopClock();
+    }
+
+    @FXML
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
         wordAndTranslationsManager.selectSpanishLanguage();
@@ -118,5 +127,7 @@ public class MainDashboardController implements Initializable {
         wordAndTranslationsManager.selectEnglishLanguage();
         loadWordLabel();
     }
+
+
 }
 

@@ -1,4 +1,6 @@
-package com.arek;
+package com.arek.database_utils;
+
+import com.arek.language_learning_app.TranslationOrder;
 
 import java.sql.*;
 import java.util.ArrayList;

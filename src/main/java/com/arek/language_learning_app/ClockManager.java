@@ -1,4 +1,4 @@
-package com.arek;
+package com.arek.language_learning_app;
 
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -62,7 +62,6 @@ public class ClockManager {
     }
 
     private void manageButtons(){
-
         if(isClockRunning){
             startButton.setDisable(true);
             stopButton.setDisable(false);

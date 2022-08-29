@@ -1,11 +1,12 @@
-package com.arek;
+package com.arek.language_learning_app;
 
-import javafx.scene.chart.PieChart;
+import com.arek.database_utils.DatabaseManager;
 import javafx.scene.control.Label;
 
 import java.util.*;
 
 public class WordAndTranslationsManager {
+
     private HashMap<String, ArrayList<String>> wordsAndTranslations;
     private ArrayList<String> wordsAndTranslationsKeys;
     private TranslationOrder translationOrder;
@@ -19,6 +20,7 @@ public class WordAndTranslationsManager {
         this.translationOrderLabel = translationOrderLabel;
         loadWordsAndTranslations();
     }
+
 
     private void loadWordsAndTranslations(){
 

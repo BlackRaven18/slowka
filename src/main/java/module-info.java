@@ -10,7 +10,11 @@ module com.arek{
     requires java.desktop;
 
 
-    opens com.arek to javafx.fxml;
-    exports com.arek;
+    exports com.arek.language_learning_app;
+    opens com.arek.language_learning_app to javafx.fxml;
+    exports com.arek.controllers;
+    opens com.arek.controllers to javafx.fxml;
+    exports com.arek.database_utils;
+    opens com.arek.database_utils to javafx.fxml;
 
 }
