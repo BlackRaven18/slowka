@@ -22,10 +22,10 @@
          <children>
             <VBox alignment="CENTER" prefHeight="396.0" prefWidth="580.0" spacing="30.0">
                <children>
-                  <MenuButton mnemonicParsing="false" text="Hiszpański">
+                  <MenuButton fx:id="selectLanguageMenu" mnemonicParsing="false" text="Hiszpański">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Hiszpański" />
-                        <MenuItem mnemonicParsing="false" text="Angielski" />
+                        <MenuItem mnemonicParsing="false" onAction="#selectSpanishLanguage" text="Hiszpański" />
+                        <MenuItem mnemonicParsing="false" onAction="#selectEnglishLanguage" text="Angielski" />
                      </items>
                      <VBox.margin>
                         <Insets top="-100.0" />

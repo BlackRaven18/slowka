@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,16 +21,15 @@ import java.util.ResourceBundle;
 public class AddNewWordsController implements Initializable {
 
 
-    private WordAndTranslationsManager wordAndTranslationsManager;
-
     @FXML private Label messageLabel;
+    @FXML private MenuButton selectLanguageMenu;
+
     @FXML private TableView<WordAndTranslation> wordsAndTranslationsTable;
     @FXML private TableColumn<WordAndTranslation, String> wordsColumn;
     @FXML private TableColumn<WordAndTranslation, String> translationsColumn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        wordAndTranslationsManager = new WordAndTranslationsManager(Languages.SPANISH, TranslationOrder.NORMAL, new Label());
 
         messageLabel.setText("");
 
@@ -46,5 +46,19 @@ public class AddNewWordsController implements Initializable {
         for(WordAndTranslation element : wordAndTranslationList){
             wordsAndTranslationsTable.getItems().add(element);
         }
+    }
+
+    @FXML
+    public void selectSpanishLanguage(){
+        selectLanguageMenu.setText("Hiszpański");
+        DatabaseManager.changeToSpanish();
+        initiateWordsAndTranslationsTableView();
+    }
+
+    @FXML
+    public void selectEnglishLanguage(){
+        selectLanguageMenu.setText("Angielski");
+        DatabaseManager.changeToEnglish();
+        initiateWordsAndTranslationsTableView();
     }
 }

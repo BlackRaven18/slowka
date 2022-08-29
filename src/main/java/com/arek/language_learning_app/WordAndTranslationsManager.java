@@ -131,4 +131,7 @@ public class WordAndTranslationsManager {
         return translationOrder;
     }
 
+    public Languages getSelectedLanguage() {
+        return selectedLanguage;
+    }
 }

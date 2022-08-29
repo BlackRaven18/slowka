@@ -57,6 +57,17 @@ public class MainDashboardController implements Initializable {
         wordLabel.setText(wordAndTranslationsManager.getRandomWord());
     }
 
+    private void updateSelectLanguageMenu(){
+        switch (wordAndTranslationsManager.getSelectedLanguage()){
+            case SPANISH:
+                selectLanguageMenu.setText("Hiszpański");
+                break;
+            case ENGLISH:
+                selectLanguageMenu.setText("Angielski");
+                break;
+        }
+    }
+
     @FXML
     public void checkIfCorrect(){
 
@@ -112,6 +123,16 @@ public class MainDashboardController implements Initializable {
     @FXML
     public void onAddWordsTabChange(){
         clockManager.stopClock();
+    }
+
+    @FXML
+    public void onTranslationTabChange(){
+        if(wordAndTranslationsManager != null) {
+            wordAndTranslationsManager.selectSpanishLanguage();
+            wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.NORMAL);
+            updateSelectLanguageMenu();
+            loadWordLabel();
+        }
     }
 
     @FXML

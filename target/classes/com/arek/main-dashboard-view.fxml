@@ -19,7 +19,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="470.0" prefWidth="720.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.MainDashboardController">
   <tabs>
-    <Tab text="Tłumaczenie">
+    <Tab onSelectionChanged="#onTranslationTabChange" text="Tłumaczenie">
          <content>
             <VBox alignment="CENTER">
                <children>
