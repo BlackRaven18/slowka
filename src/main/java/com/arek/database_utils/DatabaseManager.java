@@ -71,6 +71,36 @@ public class DatabaseManager {
         return wordsAndTranslations;
     }
 
+    public static ArrayList<WordAndTranslation> getWordsAndTranslationsAsList(TranslationOrder order){
+        ArrayList<WordAndTranslation> wordAndTranslationList = new ArrayList<>();
+
+        String querry;
+
+        if(order == TranslationOrder.NORMAL){
+            querry = GET_WORDS_WITH_TRANSLATIONS;
+        } else {
+            querry = GET_WORDS_WITH_TRANSLATIONS_REVERSE;
+        }
+
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(querry)){
+            while (resultSet.next()){
+
+                String word = resultSet.getString(1);
+                String translation = resultSet.getString(2);
+                WordAndTranslation wordAndTranslation = new WordAndTranslation(word, translation);
+
+                wordAndTranslationList.add(wordAndTranslation);
+            }
+
+        }catch (SQLException e){
+            System.err.println("GET_WORDS_WITH_TRANSLATIONS_AS_LIST ERROR!");
+        }
+
+        return wordAndTranslationList;
+    }
+
     public static void changeToSpanish(){
         databaseURL = SPANISH_POLISH_DATABASE_URL;
     }
