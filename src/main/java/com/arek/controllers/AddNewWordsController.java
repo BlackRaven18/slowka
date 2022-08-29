@@ -8,10 +8,7 @@ import com.arek.language_learning_app.WordAndTranslationsManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -23,6 +20,7 @@ public class AddNewWordsController implements Initializable {
 
     @FXML private Label messageLabel;
     @FXML private MenuButton selectLanguageMenu;
+    @FXML private TextField wordField, translationField;
 
     @FXML private TableView<WordAndTranslation> wordsAndTranslationsTable;
     @FXML private TableColumn<WordAndTranslation, String> wordsColumn;
@@ -60,5 +58,29 @@ public class AddNewWordsController implements Initializable {
         selectLanguageMenu.setText("Angielski");
         DatabaseManager.changeToEnglish();
         initiateWordsAndTranslationsTableView();
+    }
+
+    @FXML
+    public void addNewWord(){
+        String word = wordField.getText();
+        String translation = translationField.getText();
+
+        DatabaseManager.addWordWithTranslation(new WordAndTranslation(word, translation));
+        initiateWordsAndTranslationsTableView();
+        wordsAndTranslationsTable.refresh();
+
+        messageLabel.setText("Dodano nowe słówko");
+        wordField.setText("");
+        translationField.setText("");
+    }
+
+    @FXML
+    public void deleteWord(){
+
+    }
+
+    @FXML
+    public void changeWord(){
+
     }
 }

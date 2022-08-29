@@ -42,25 +42,31 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="162.0" text="słówko">
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="162.0" text="słówko:">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="162.0" text="tłumaczenie" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField GridPane.columnIndex="1">
+                        <TextField fx:id="wordField" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </TextField>
+                        <TextField fx:id="translationField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="162.0" text="tłumaczenie:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
-                  <Button mnemonicParsing="false" text="Dodaj" />
+                  <HBox alignment="CENTER" spacing="30.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addNewWord" styleClass="add_button" stylesheets="@styles.css" text="Dodaj" />
+                        <Button mnemonicParsing="false" onAction="#deleteWord" styleClass="delete_button" stylesheets="@styles.css" text="Usuń" />
+                        <Button mnemonicParsing="false" onAction="#changeWord" styleClass="modify_button" stylesheets="@styles.css" text="Zmień" />
+                     </children>
+                  </HBox>
                   <Label fx:id="messageLabel" text="message">
                      <font>
                         <Font size="14.0" />
