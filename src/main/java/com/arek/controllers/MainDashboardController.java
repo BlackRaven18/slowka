@@ -140,6 +140,12 @@ public class MainDashboardController implements Initializable {
     }
 
     @FXML
+    public void onMergeDatabasesTabChange(){
+        onAddWordsTabChange();
+        onTranslationTabChange();
+    }
+
+    @FXML
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
         wordAndTranslationsManager.selectSpanishLanguage();
