@@ -2,13 +2,13 @@ package com.arek.database_utils;
 
 public class WordAndTranslationRowNumbers {
     int wordRowNumber;
-    int translationWordNumber;
+    int translationRowNumber;
 
     public WordAndTranslationRowNumbers(){}
 
-    public WordAndTranslationRowNumbers(int wordRowNumber, int translationWordNumber){
+    public WordAndTranslationRowNumbers(int wordRowNumber, int translationRowNumber){
         this.wordRowNumber = wordRowNumber;
-        this.translationWordNumber = translationWordNumber;
+        this.translationRowNumber = translationRowNumber;
     }
 
     public int getWordRowNumber() {
@@ -19,11 +19,11 @@ public class WordAndTranslationRowNumbers {
         this.wordRowNumber = wordRowNumber;
     }
 
-    public int getTranslationWordNumber() {
-        return translationWordNumber;
+    public int gettranslationRowNumber() {
+        return translationRowNumber;
     }
 
-    public void setTranslationWordNumber(int translationWordNumber) {
-        this.translationWordNumber = translationWordNumber;
+    public void settranslationRowNumber(int translationRowNumber) {
+        this.translationRowNumber = translationRowNumber;
     }
 }

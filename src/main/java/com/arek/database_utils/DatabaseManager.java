@@ -16,20 +16,22 @@ public class DatabaseManager {
 
     private static final String GET_WORDS_NUMBER_QUERRY = "SELECT COUNT(*) FROM SLOWO;";
     private static final String GET_TRANSLATIONS_NUMBER_QUERRY = "SELECT COUNT(*) FROM TLUMACZENIE;";
-    private static final String GET_WORDS_WITH_TRANSLATIONS = "SELECT sl.slowo, tl.tlumaczenie\n" +
-            "FROM slowo sl, tlumaczenie tl\n" +
-            "WHERE sl.id_slowa = tl.id_slowa;\n";
+    private static final String GET_WORDS_WITH_TRANSLATIONS ="SELECT sl.slowo, tl.tlumaczenie " +
+            "FROM SLOWO sl, TLUMACZENIE tl " +
+            "WHERE sl.id_slowa = tl.id_slowa " +
+            "ORDER BY sl.slowo;";
 
     private static final String GET_WORDS_WITH_TRANSLATIONS_REVERSE = "SELECT tl.tlumaczenie, sl.slowo\n" +
             "FROM slowo sl, tlumaczenie tl\n" +
             "WHERE sl.id_slowa = tl.id_slowa;\n";
 
-    public static int getWordsNumber(){
+    public static int getNewWordId(){
         int wordsNumber = -1;
+        String querry = "SELECT MAX(ROWID)FROM SLOWO;";
 
         try (Connection connection = DriverManager.getConnection(databaseURL);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(GET_WORDS_NUMBER_QUERRY)){
+             ResultSet resultSet = statement.executeQuery(querry)){
             wordsNumber = resultSet.getInt(1);
         }catch (SQLException e){
             System.err.println("GET_WORDS_NUMBER_QUERRY ERROR!");
@@ -38,12 +40,14 @@ public class DatabaseManager {
         return wordsNumber;
     }
 
-    public static int getTranslationsNumber(){
+    public static int getNewTranslationId(){
         int translationsNumber = -1;
+
+        String querry = "SELECT MAX(ROWID) FROM TLUMACZENIE;";
 
         try (Connection connection = DriverManager.getConnection(databaseURL);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(GET_TRANSLATIONS_NUMBER_QUERRY)){
+             ResultSet resultSet = statement.executeQuery(querry)){
             translationsNumber = resultSet.getInt(1);
         }catch (SQLException e){
             System.err.println("GET_WORDS_NUMBER_QUERRY ERROR!");
@@ -136,10 +140,37 @@ public class DatabaseManager {
         }
     }
 
+    private static void addNewWord(String word){
+        int newWordId =getNewWordId();
+        String querry = String.format("INSERT INTO SLOWO VALUES(%d, '%s');", newWordId, word);
+
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement()){
+            statement.executeUpdate(querry);
+
+        }catch (SQLException e){
+            System.err.println("ADD_NEW_WORD ERROR!");
+        }
+    }
+
+    private static void addNewTranslation(int wordId, String translation){
+        int newTranslationId =getNewTranslationId();
+        String querry = String.format("INSERT INTO TLUMACZENIE VALUES(%d, '%s', %d);", newTranslationId, translation, wordId);
+
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement()){
+            statement.executeUpdate(querry);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("ADD_NEW_TRANSLATION ERROR!");
+        }
+    }
+
     public static void deleteWordWithTranslation(WordAndTranslation wordAndTranslation){
         WordAndTranslationRowNumbers wordAndTranslationRowNumbers = getWordAndTranslationRowsNumbers(wordAndTranslation);
 
-        String deleteTranslationQuerry = String.format("DELETE FROM TLUMACZENIE WHERE ROWID = %d;", wordAndTranslationRowNumbers.getTranslationWordNumber());
+        String deleteTranslationQuerry = String.format("DELETE FROM TLUMACZENIE WHERE ROWID = %d;", wordAndTranslationRowNumbers.gettranslationRowNumber());
         String deleteWordQuerry = String.format("DELETE FROM SLOWO WHERE ROWID = %d;", wordAndTranslationRowNumbers.getWordRowNumber());
 
         int numberOfWordTranslations = getWordNumberOfTranslations(wordAndTranslation.getWord());
@@ -155,6 +186,26 @@ public class DatabaseManager {
         }catch (SQLException e){
             System.err.println("DELETE_WORD_WITH_TRANSLATION ERROR!");
         }
+    }
+
+    public static void changeWordWithTranslation(WordAndTranslation oldWordAndTranslation, WordAndTranslation newWordAndTranslation){
+        WordAndTranslationRowNumbers wordAndTranslationRowNumbers = getWordAndTranslationRowsNumbers(oldWordAndTranslation);
+
+        String changeWordQuerry = String.format("UPDATE SLOWO SET slowo = '%s' WHERE ROWID = %d;",
+                newWordAndTranslation.getWord(), wordAndTranslationRowNumbers.getWordRowNumber());
+        String changeTranslationQuerry = String.format("UPDATE TLUMACZENIE SET tlumaczenie = '%s' WHERE ROWID = %d;",
+                newWordAndTranslation.getTranslation(), wordAndTranslationRowNumbers.gettranslationRowNumber());
+
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement()){
+
+            statement.executeUpdate(changeWordQuerry);
+            statement.executeUpdate(changeTranslationQuerry);
+
+        }catch (SQLException e){
+            System.err.println("CHANGE_WORD_WITH_TRANSLATION ERROR!");
+        }
+
     }
 
     public static int getWordNumberOfTranslations(String word){
@@ -204,32 +255,6 @@ public class DatabaseManager {
         return wordAndTranslationRowNumbers;
     }
 
-    private static void addNewWord(String word){
-        int newWordId =getWordsNumber();
-        String querry = String.format("INSERT INTO SLOWO VALUES(%d, '%s');", newWordId, word);
-
-        try (Connection connection = DriverManager.getConnection(databaseURL);
-             Statement statement = connection.createStatement()){
-            statement.executeUpdate(querry);
-
-        }catch (SQLException e){
-            System.err.println("ADD_NEW_WORD ERROR!");
-        }
-    }
-
-    private static void addNewTranslation(int wordId, String translation){
-        int newTranslationId =getTranslationsNumber();
-        String querry = String.format("INSERT INTO TLUMACZENIE VALUES(%d, '%s', %d);", newTranslationId, translation, wordId);
-
-        try (Connection connection = DriverManager.getConnection(databaseURL);
-             Statement statement = connection.createStatement()){
-            statement.executeUpdate(querry);
-
-        }catch (SQLException e){
-            e.printStackTrace();
-            System.err.println("ADD_NEW_TRANSLATION ERROR!");
-        }
-    }
 
     private static int getWordId(String word){
         String querry = String.format("SELECT id_slowa FROM SLOWO WHERE slowo = '%s';", word);

@@ -7,7 +7,6 @@ import com.arek.language_learning_app.TranslationOrder;
 import com.arek.language_learning_app.WordAndTranslationsManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -35,8 +34,7 @@ public class AddNewWordsController implements Initializable {
     }
 
     public void restartTab(){
-        System.out.println("bebe");
-        messageLabel.setText("iiiga");
+        messageLabel.setText("");
         selectSpanishLanguage();
     }
 
@@ -67,23 +65,28 @@ public class AddNewWordsController implements Initializable {
     }
     @FXML
     private void selectWordTranslationTableRow(){
+        WordAndTranslation selectedWordWithTranslation = getSelectedWordWithTranslation();
+
+        if(selectedWordWithTranslation != null) {
+            wordField.setText(selectedWordWithTranslation.getWord());
+            translationField.setText(selectedWordWithTranslation.getTranslation());
+        }
+    }
+
+    private WordAndTranslation getSelectedWordWithTranslation(){
         int index = wordsAndTranslationsTable.getSelectionModel().getSelectedIndex();
 
         if(index < 0){
-            return;
+            return null;
         }
 
-        wordField.setText(wordsColumn.getCellData(index));
-        translationField.setText(translationsColumn.getCellData(index));
+        return new WordAndTranslation(wordsColumn.getCellData(index), translationsColumn.getCellData(index));
     }
 
 
     @FXML
     public void addNewWord(){
-        String word = wordField.getText();
-        String translation = translationField.getText();
-
-        DatabaseManager.addWordWithTranslation(new WordAndTranslation(word, translation));
+        DatabaseManager.addWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
         initiateWordsAndTranslationsTableView();
         //wordsAndTranslationsTable.refresh();
 
@@ -96,9 +99,7 @@ public class AddNewWordsController implements Initializable {
     public void deleteWord(){
         if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
             DatabaseManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
-
             initiateWordsAndTranslationsTableView();
-            //wordsAndTranslationsTable.refresh();
 
             messageLabel.setText("Usunięto słówko");
             wordField.setText("");
@@ -108,6 +109,17 @@ public class AddNewWordsController implements Initializable {
 
     @FXML
     public void changeWord(){
+        if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
+            WordAndTranslation oldWordAndTranslation = getSelectedWordWithTranslation();
+            WordAndTranslation newWordAndTranslation = new WordAndTranslation(wordField.getText(), translationField.getText());
 
+            DatabaseManager.changeWordWithTranslation(oldWordAndTranslation, newWordAndTranslation);
+            initiateWordsAndTranslationsTableView();
+
+            messageLabel.setText("Zmieniono słówko");
+            wordField.setText("");
+            translationField.setText("");
+        }
     }
+
 }
