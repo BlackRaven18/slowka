@@ -9,8 +9,12 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    private static Stage mainStage;
+
     @Override
     public void start(Stage stage) throws IOException {
+        mainStage = stage;
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/arek/main-dashboard-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 720, 480);
@@ -47,5 +51,9 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static Stage getMainStage() {
+        return mainStage;
     }
 }

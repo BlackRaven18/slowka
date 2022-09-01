@@ -14,13 +14,13 @@
          <children>
             <HBox alignment="CENTER" prefHeight="85.0" prefWidth="720.0" spacing="20.0">
                <children>
-                  <MenuButton fx:id="selectLanguageMenu" mnemonicParsing="false" text="MenuButton">
+                  <MenuButton fx:id="selectLanguageMenu" mnemonicParsing="false" text="Hiszpański">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                      <MenuItem mnemonicParsing="false" onAction="#selectSpanishLanguage" text="Hiszpański" />
+                      <MenuItem mnemonicParsing="false" onAction="#selectEnglishLanguage" text="Angielski" />
                     </items>
                   </MenuButton>
-                  <Button mnemonicParsing="false" onAction="#addDatabaseFile" text="Dodaj" />
+                  <Button mnemonicParsing="false" onAction="#addDatabaseFile" text="Wybierz plik" />
                   <Label fx:id="fileLabel" text="fileLabel" />
                </children>
             </HBox>

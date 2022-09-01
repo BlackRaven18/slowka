@@ -5,7 +5,6 @@ import com.arek.language_learning_app.TranslationOrder;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 public class DatabaseManager {
 
@@ -24,6 +23,46 @@ public class DatabaseManager {
     private static final String GET_WORDS_WITH_TRANSLATIONS_REVERSE = "SELECT tl.tlumaczenie, sl.slowo\n" +
             "FROM slowo sl, tlumaczenie tl\n" +
             "WHERE sl.id_slowa = tl.id_slowa;\n";
+
+    public static ArrayList<Word> getWords(){
+        ArrayList<Word> wordList = new ArrayList();
+        String querry = "SELECT * FROM SLOWO";
+
+        try(Connection connection = DriverManager.getConnection(databaseURL);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(querry)){
+
+            while(resultSet.next()){
+                wordList.add(new Word(resultSet.getInt(1), resultSet.getString(2)));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("GET WORDS ERROR");
+        }
+
+        return wordList;
+    }
+
+    public static ArrayList<Translation> getTranslations(){
+        ArrayList<Translation> translationList = new ArrayList();
+        String querry = "SELECT * FROM TLUMACZENIE";
+
+        try(Connection connection = DriverManager.getConnection(databaseURL);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(querry)){
+
+            while(resultSet.next()){
+                translationList.add(new Translation(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3)));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("GET TRANSLATIONS ERROR");
+        }
+
+        return translationList;
+    }
 
     public static int getNewWordId(){
         int wordsNumber = -1;
@@ -307,5 +346,8 @@ public class DatabaseManager {
     }
     public static void changeToEnglish(){
         databaseURL = ENGLISH_POLISH_DATABASE_URL;
+    }
+    public static void changeToOtherDatabase(String URL){
+        databaseURL = URL;
     }
 }
