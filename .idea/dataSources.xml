@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/database/english-polish.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="wordsdatabase.db" uuid="58fd7027-20c9-429b-a7f3-f6c130b44336">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../wordsdatabase.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

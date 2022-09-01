@@ -34,7 +34,8 @@ public class DatabaseMergeManager {
         System.out.println("*************************************************");
 
         for(Translation translation : srcTranslationTable){
-            System.out.println(translation.getWordID() +  " " + translation.getTranslation());
+            System.out.println(translation.getTranslationID() + " "
+                    + translation.getTranslation() + " " + translation.getWordID());
         }
 
         System.out.println("-----------------------------------------------------");
@@ -57,7 +58,9 @@ public class DatabaseMergeManager {
         updateWordTablePrimaryKeysAndForeignKeysInTranslationTable();
 
         //3. add words from new database to old database
-        //addWordsAndTranslationsFromNewDatabase();
+        addWordsAndTranslationsFromNewDatabase();
+
+        System.out.println("---------------- AFTER -----------------");
 
         for(Word word : srcWordTable){
             System.out.println(word.getWordID() +  " " + word.getWord());
@@ -66,7 +69,8 @@ public class DatabaseMergeManager {
         System.out.println("*************************************************");
 
         for(Translation translation : srcTranslationTable){
-            System.out.println(translation.getWordID() +  " " + translation.getTranslation());
+            System.out.println(translation.getTranslationID() + " "
+                    + translation.getTranslation() + " " + translation.getWordID());
         }
 
 
@@ -103,29 +107,57 @@ public class DatabaseMergeManager {
         for(Word newWord : newWordTable){
 
             // if new word is already in the souce table
-            if(isWordInWordTable(srcWordTable, newWord.getWord())){
+            Word oldWord = isWordInWordTable(srcWordTable, newWord.getWord());
+            if(oldWord != null){
 
-                //if(isTranslationInTranslationTable(newWord.getWordID(), newTranslationTable, ))
+                ArrayList<Translation> newWordTranslations = getWordTranslationList(newWord, newTranslationTable);
+
+                for(Translation translation : newWordTranslations){
+
+                    //if this translations does not existing in src database add it
+                    if(!isTranslationInTranslationTable(translation, srcTranslationTable)){
+                        Translation newTranslation = new Translation(srcTranslationTable.size(),
+                                translation.getTranslation(), oldWord.getWordID());
+                        srcTranslationTable.add(newTranslation);
+                    }
+                }
+
+                // if new word does not exist is src database add it and add translations
+            } else{
+
+                int newWordId = srcWordTable.size();
+
+                //add new word
+                srcWordTable.add(new Word(newWordId, newWord.getWord()));
+
+                //add translations
+                ArrayList<Translation> newWordTranslations = getWordTranslationList(newWord, newTranslationTable);
+
+                for(Translation translation : newWordTranslations){
+                    srcTranslationTable.add(new Translation(srcTranslationTable.size(),
+                            translation.getTranslation(), newWordId));
+                }
 
             }
         }
 
     }
 
-    private boolean isWordInWordTable(ArrayList<Word> wordTable, String wordName){
+    private Word isWordInWordTable(ArrayList<Word> wordTable, String wordName){
 
         for(Word word : wordTable){
             if(word.getWord().equals(wordName)){
-                return true;
+                return word;
             }
         }
 
-        return false;
+        return null;
     }
 
-    private boolean isTranslationInTranslationTable(int newWordId, ArrayList<Translation> translationTable, String translationName){
-        for(Translation translation : translationTable){
-            if(translation.getWordID() == newWordId && translation.getTranslation().equals(translationName)){
+
+    private boolean isTranslationInTranslationTable(Translation translation, ArrayList<Translation> translationTable){
+        for(Translation tmpTranslation : translationTable){
+            if(tmpTranslation.getTranslation().equals(translation.getTranslation())){
                 return true;
             }
         }
@@ -142,7 +174,9 @@ public class DatabaseMergeManager {
             }
         }
 
-        return translationList;
+        return wordTranslationList;
     }
+
+
 
 }
