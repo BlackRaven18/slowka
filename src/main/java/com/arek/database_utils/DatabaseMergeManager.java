@@ -57,8 +57,13 @@ public class DatabaseMergeManager {
         //2. update Word Table Primary Keys and Foreign Keys in Translation Table
         updateWordTablePrimaryKeysAndForeignKeysInTranslationTable();
 
-        //3. add words from new database to old database
+        //3. add words from new database to words from old database
         addWordsAndTranslationsFromNewDatabase();
+
+        //4. Add merged data to database
+        DatabaseManager.changeToSpanish();
+        addMergedDataToDatabase();
+
 
         System.out.println("---------------- AFTER -----------------");
 
@@ -143,6 +148,7 @@ public class DatabaseMergeManager {
 
     }
 
+
     private Word isWordInWordTable(ArrayList<Word> wordTable, String wordName){
 
         for(Word word : wordTable){
@@ -153,7 +159,6 @@ public class DatabaseMergeManager {
 
         return null;
     }
-
 
     private boolean isTranslationInTranslationTable(Translation translation, ArrayList<Translation> translationTable){
         for(Translation tmpTranslation : translationTable){
@@ -175,6 +180,12 @@ public class DatabaseMergeManager {
         }
 
         return wordTranslationList;
+    }
+
+    private void addMergedDataToDatabase(){
+        DatabaseManager.clearDatabase();
+        DatabaseManager.addWordsToWordTable(srcWordTable);
+        DatabaseManager.addTranslationsToTranslationTable(srcTranslationTable);
     }
 
 

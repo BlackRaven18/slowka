@@ -30,8 +30,6 @@ public class MergeDatabasesController implements Initializable {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Database Files", "*.db"));
 
-        //TODO: ONLY FOR TESTS!!
-        databaseFile = new File("C:\\Users\\Arek\\Desktop\\wordsdatabase.db");
 
     }
 
@@ -41,6 +39,11 @@ public class MergeDatabasesController implements Initializable {
         if(databaseFile != null){
             fileLabel.setText(databaseFile.getName());
         }
+    }
+
+    public void resetDatabaseFile(){
+        databaseFile = null;
+        fileLabel.setText("");
     }
 
     @FXML
@@ -58,11 +61,13 @@ public class MergeDatabasesController implements Initializable {
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
         DatabaseManager.changeToSpanish();
+        resetDatabaseFile();
     }
 
     @FXML
     public void selectEnglishLanguage(){
         selectLanguageMenu.setText("Angielski");
         DatabaseManager.changeToEnglish();
+        resetDatabaseFile();
     }
 }

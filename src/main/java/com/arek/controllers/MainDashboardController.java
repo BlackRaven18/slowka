@@ -21,8 +21,8 @@ public class MainDashboardController implements Initializable {
     private WordAndTranslationsManager wordAndTranslationsManager;
     private ClockManager clockManager;
 
-    @FXML
-    private AddNewWordsController addNewWordsController;
+    @FXML private AddNewWordsController addNewWordsController;
+    @FXML private MergeDatabasesController mergeDatabasesController;
 
     @FXML private Label wordLabel, messageLabel, translationOrderLabel, clockLabel;
     @FXML private TextField translationField;

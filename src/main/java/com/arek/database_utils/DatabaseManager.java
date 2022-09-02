@@ -341,6 +341,76 @@ public class DatabaseManager {
         return getTranslationId(wordId, translation) != -1;
     }
 
+    public static void clearDatabase(){
+        clearTranslationTable();
+        clearWordTable();
+    }
+
+    private static void clearTranslationTable(){
+        String querry = "DELETE FROM TLUMACZENIE";
+
+        try(Connection connection = DriverManager.getConnection(databaseURL);
+            Statement statement = connection.createStatement()){
+
+            statement.executeUpdate(querry);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("CLEAR TRANSLATION TABLE ERROR");
+        }
+    }
+
+    private static void clearWordTable(){
+        String querry = "DELETE FROM SLOWO";
+
+        try(Connection connection = DriverManager.getConnection(databaseURL);
+            Statement statement = connection.createStatement()){
+
+            statement.executeUpdate(querry);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("CLEAR WORD TABLE ERROR");
+        }
+    }
+
+    public static void addWordsToWordTable(ArrayList<Word> wordList){
+        String querry;
+
+        try(Connection connection = DriverManager.getConnection(databaseURL);
+            Statement statement = connection.createStatement()){
+
+            for(Word word : wordList){
+                querry = String.format("INSERT INTO SLOWO VALUES (%d, '%s');", word.getWordID(), word.getWord());
+                statement.executeUpdate(querry);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("ADD WORDS TO WORD TABLE ERROR");
+        }
+    }
+
+
+    public static void addTranslationsToTranslationTable(ArrayList<Translation> translationList){
+        String querry;
+
+        try(Connection connection = DriverManager.getConnection(databaseURL);
+            Statement statement = connection.createStatement()){
+
+            for(Translation translation : translationList){
+                querry = String.format("INSERT INTO TLUMACZENIE VALUES (%d, '%s', %d);", translation.getTranslationID(), translation.getTranslation(), translation.getWordID());
+                statement.executeUpdate(querry);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("ADD TRANSLATION TO TRANSLATION TABLE ERROR");
+        }
+    }
+
+
+
     public static void changeToSpanish(){
         databaseURL = SPANISH_POLISH_DATABASE_URL;
     }
