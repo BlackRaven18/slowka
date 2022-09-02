@@ -1,11 +1,14 @@
 package com.arek.database_utils;
 
+import com.arek.language_learning_app.Languages;
+
 import javax.swing.plaf.IconUIResource;
 import java.io.File;
 import java.util.ArrayList;
 
 public class DatabaseMergeManager {
 
+    Languages language;
     File newDatabaseFile;
 
     ArrayList<Word> srcWordTable;
@@ -14,7 +17,8 @@ public class DatabaseMergeManager {
     ArrayList<Translation> newTranslationTable;
 
 
-    public DatabaseMergeManager(File newDatabaseFile){
+    public DatabaseMergeManager(Languages language, File newDatabaseFile){
+        this.language = language;
         this.newDatabaseFile = newDatabaseFile;
 
         srcWordTable = loadWordTable();
@@ -26,20 +30,6 @@ public class DatabaseMergeManager {
 
         newWordTable = loadWordTable();
         newTranslationTable = loadTranslationTable();
-
-        for(Word word : srcWordTable){
-            System.out.println(word.getWordID() +  " " + word.getWord());
-        }
-
-        System.out.println("*************************************************");
-
-        for(Translation translation : srcTranslationTable){
-            System.out.println(translation.getTranslationID() + " "
-                    + translation.getTranslation() + " " + translation.getWordID());
-        }
-
-        System.out.println("-----------------------------------------------------");
-
     }
 
     private ArrayList<Word> loadWordTable(){
@@ -61,25 +51,17 @@ public class DatabaseMergeManager {
         addWordsAndTranslationsFromNewDatabase();
 
         //4. Add merged data to database
-        DatabaseManager.changeToSpanish();
+
+        switch(language){
+            case SPANISH:
+                DatabaseManager.changeToSpanish();
+                break;
+            case ENGLISH:
+                DatabaseManager.changeToEnglish();
+                break;
+        }
+
         addMergedDataToDatabase();
-
-
-        System.out.println("---------------- AFTER -----------------");
-
-        for(Word word : srcWordTable){
-            System.out.println(word.getWordID() +  " " + word.getWord());
-        }
-
-        System.out.println("*************************************************");
-
-        for(Translation translation : srcTranslationTable){
-            System.out.println(translation.getTranslationID() + " "
-                    + translation.getTranslation() + " " + translation.getWordID());
-        }
-
-
-
     }
 
     private void updateTranslationTablePrimaryKeys(){

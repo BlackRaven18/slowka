@@ -2,9 +2,7 @@ package com.arek.controllers;
 
 import com.arek.database_utils.DatabaseManager;
 import com.arek.database_utils.WordAndTranslation;
-import com.arek.language_learning_app.Languages;
 import com.arek.language_learning_app.TranslationOrder;
-import com.arek.language_learning_app.WordAndTranslationsManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -48,6 +46,8 @@ public class AddNewWordsController implements Initializable {
         for(WordAndTranslation element : wordAndTranslationList){
             wordsAndTranslationsTable.getItems().add(element);
         }
+
+        wordsAndTranslationsTable.refresh();
     }
 
     @FXML
@@ -86,9 +86,8 @@ public class AddNewWordsController implements Initializable {
 
     @FXML
     public void addNewWord(){
-        DatabaseManager.addWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
+        DatabaseManager.addWordWithTranslation(new WordAndTranslation(wordField.getText().trim(), translationField.getText().trim()));
         initiateWordsAndTranslationsTableView();
-        //wordsAndTranslationsTable.refresh();
 
         messageLabel.setText("Dodano nowe słówko");
         wordField.setText("");
