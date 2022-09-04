@@ -1,7 +1,7 @@
 package com.arek.controllers;
 
 import com.arek.database_utils.DatabaseBackupManager;
-import com.arek.database_utils.DatabaseManager;
+import com.arek.database_utils.DatabaseQuerryManager;
 import com.arek.database_utils.DatabaseMergeManager;
 import com.arek.language_learning_app.Languages;
 import com.arek.language_learning_app.Main;
@@ -63,7 +63,7 @@ public class MergeDatabasesController implements Initializable {
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
         language = Languages.SPANISH;
-        DatabaseManager.changeToSpanish();
+        DatabaseQuerryManager.changeToSpanish();
         resetDatabaseFile();
     }
 
@@ -71,7 +71,7 @@ public class MergeDatabasesController implements Initializable {
     public void selectEnglishLanguage(){
         selectLanguageMenu.setText("Angielski");
         language = Languages.ENGLISH;
-        DatabaseManager.changeToEnglish();
+        DatabaseQuerryManager.changeToEnglish();
         resetDatabaseFile();
     }
 }

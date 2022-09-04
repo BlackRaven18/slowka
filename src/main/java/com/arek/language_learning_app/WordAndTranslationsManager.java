@@ -1,6 +1,6 @@
 package com.arek.language_learning_app;
 
-import com.arek.database_utils.DatabaseManager;
+import com.arek.database_utils.DatabaseQuerryManager;
 import javafx.scene.control.Label;
 
 import java.util.*;
@@ -11,13 +11,15 @@ public class WordAndTranslationsManager {
     private ArrayList<String> wordsAndTranslationsKeys;
     private TranslationOrder translationOrder;
     private Languages selectedLanguage;
-    private Label translationOrderLabel;
 
 
-    public WordAndTranslationsManager(Languages language, TranslationOrder order, Label translationOrderLabel){
+    public WordAndTranslationsManager(Languages language, TranslationOrder order){
         this.selectedLanguage = language;
         this.translationOrder = order;
-        this.translationOrderLabel = translationOrderLabel;
+        loadWordsAndTranslations();
+    }
+
+    private void reloadWordsAndTranslations(){
         loadWordsAndTranslations();
     }
 
@@ -26,19 +28,17 @@ public class WordAndTranslationsManager {
 
         switch(selectedLanguage){
             case SPANISH:
-                DatabaseManager.changeToSpanish();
+                DatabaseQuerryManager.changeToSpanish();
                 break;
             case ENGLISH:
-                DatabaseManager.changeToEnglish();
+                DatabaseQuerryManager.changeToEnglish();
                 break;
             default:
-                DatabaseManager.changeToSpanish();
+                DatabaseQuerryManager.changeToSpanish();
                 break;
         }
 
-        updateTranslationOrderLabel();
-
-        wordsAndTranslations = DatabaseManager.getWordsAndTranslations(translationOrder);
+        wordsAndTranslations = DatabaseQuerryManager.getWordsAndTranslations(translationOrder);
         loadWordsAndTranslationsKeys();
     }
 
@@ -87,36 +87,17 @@ public class WordAndTranslationsManager {
 
     public void changeTranslationOrder(TranslationOrder order){
         this.translationOrder = order;
-        updateTranslationOrderLabel();
-
-        loadWordsAndTranslations();
-    }
-
-    private void updateTranslationOrderLabel(){
-        switch(selectedLanguage){
-            case SPANISH:
-                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Hiszpańsko - Polski");
-                else translationOrderLabel.setText("Polsko - Hiszpański");
-                break;
-            case ENGLISH:
-                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Angielsko - Polski");
-                else translationOrderLabel.setText("Polsko - Angielski");
-                break;
-            default:
-                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Hiszpańsko - Polski");
-                else translationOrderLabel.setText("Polsko - Hiszpański");
-                break;
-        }
+        reloadWordsAndTranslations();
     }
 
     public void selectSpanishLanguage(){
         selectedLanguage = Languages.SPANISH;
-        loadWordsAndTranslations();
+        reloadWordsAndTranslations();
     }
 
     public void selectEnglishLanguage(){
         selectedLanguage = Languages.ENGLISH;
-        loadWordsAndTranslations();
+        reloadWordsAndTranslations();
     }
 
     public HashMap<String, ArrayList<String>> getWordsAndTranslations() {
@@ -133,5 +114,9 @@ public class WordAndTranslationsManager {
 
     public Languages getSelectedLanguage() {
         return selectedLanguage;
+    }
+
+    public void setSelectedLanguage(Languages selectedLanguage) {
+        this.selectedLanguage = selectedLanguage;
     }
 }

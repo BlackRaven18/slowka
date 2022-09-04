@@ -2,7 +2,6 @@ package com.arek.database_utils;
 
 import com.arek.language_learning_app.Languages;
 
-import javax.swing.plaf.IconUIResource;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -26,18 +25,18 @@ public class DatabaseMergeManager {
 
         String URL = String.format("jdbc:sqlite:%s", this.newDatabaseFile.getAbsolutePath());
 
-        DatabaseManager.changeToOtherDatabase(URL);
+        DatabaseQuerryManager.changeToOtherDatabase(URL);
 
         newWordTable = loadWordTable();
         newTranslationTable = loadTranslationTable();
     }
 
     private ArrayList<Word> loadWordTable(){
-        return DatabaseManager.getWords();
+        return DatabaseQuerryManager.getWords();
     }
 
     private ArrayList<Translation> loadTranslationTable(){
-        return DatabaseManager.getTranslations();
+        return DatabaseQuerryManager.getTranslations();
     }
 
     public void mergeDatabases(){
@@ -54,10 +53,10 @@ public class DatabaseMergeManager {
 
         switch(language){
             case SPANISH:
-                DatabaseManager.changeToSpanish();
+                DatabaseQuerryManager.changeToSpanish();
                 break;
             case ENGLISH:
-                DatabaseManager.changeToEnglish();
+                DatabaseQuerryManager.changeToEnglish();
                 break;
         }
 
@@ -165,9 +164,9 @@ public class DatabaseMergeManager {
     }
 
     private void addMergedDataToDatabase(){
-        DatabaseManager.clearDatabase();
-        DatabaseManager.addWordsToWordTable(srcWordTable);
-        DatabaseManager.addTranslationsToTranslationTable(srcTranslationTable);
+        DatabaseQuerryManager.clearDatabase();
+        DatabaseQuerryManager.addWordsToWordTable(srcWordTable);
+        DatabaseQuerryManager.addTranslationsToTranslationTable(srcTranslationTable);
     }
 
 

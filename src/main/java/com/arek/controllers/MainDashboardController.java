@@ -1,5 +1,6 @@
 package com.arek.controllers;
 
+import com.arek.database_utils.DatabaseQuerryManager;
 import com.arek.language_learning_app.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,10 +16,9 @@ import java.util.ResourceBundle;
 public class MainDashboardController implements Initializable {
 
 
-    // ****************************************************
-    // Translation Tab variables
-    // ****************************************************
     private WordAndTranslationsManager wordAndTranslationsManager;
+    private Languages language;
+    private TranslationOrder translationOrder;
     private ClockManager clockManager;
 
     @FXML private AddNewWordsController addNewWordsController;
@@ -29,19 +29,16 @@ public class MainDashboardController implements Initializable {
     @FXML private MenuButton selectLanguageMenu;
     @FXML private Button startClockButton, stopClockButton;
 
-
-
-    // ****************************************************
-    // Add New Words Tab variables
-    // ****************************************************
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        wordAndTranslationsManager = new WordAndTranslationsManager(Languages.SPANISH, TranslationOrder.NORMAL, translationOrderLabel);
+
+        language = Languages.SPANISH;
+        translationOrder = TranslationOrder.NORMAL;
+        wordAndTranslationsManager = new WordAndTranslationsManager(language, translationOrder);
+
         loadWordLabel();
+        updateTranslationOrderLabel();
 
         messageLabel.setText("");
 
@@ -51,12 +48,21 @@ public class MainDashboardController implements Initializable {
 
 
 
-    // ****************************************************
-    // Translation Tab methods
-    // ****************************************************
-
     private void loadWordLabel(){
         wordLabel.setText(wordAndTranslationsManager.getRandomWord());
+    }
+
+    private void updateTranslationOrderLabel(){
+        switch(language){
+            case SPANISH:
+                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Hiszpańsko - Polski");
+                else translationOrderLabel.setText("Polsko - Hiszpański");
+                break;
+            case ENGLISH:
+                if(translationOrder == TranslationOrder.NORMAL) translationOrderLabel.setText("Angielsko - Polski");
+                else translationOrderLabel.setText("Polsko - Angielski");
+                break;
+        }
     }
 
     private void updateSelectLanguageMenu(){
@@ -91,16 +97,15 @@ public class MainDashboardController implements Initializable {
 
     @FXML
     public void changeTranslationOrder(){
-
-        TranslationOrder translationOrder = wordAndTranslationsManager.getTranslationOrder();
-
         messageLabel.setText("");
 
         if(translationOrder == TranslationOrder.NORMAL){
-            wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.REVERSE);
+            translationOrder = TranslationOrder.REVERSE;
+            wordAndTranslationsManager.changeTranslationOrder(translationOrder);
             loadWordLabel();
         } else{
-            wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.NORMAL);
+            translationOrder = TranslationOrder.NORMAL;
+            wordAndTranslationsManager.changeTranslationOrder(translationOrder);
             loadWordLabel();
         }
     }

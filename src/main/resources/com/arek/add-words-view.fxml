@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,11 +18,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="addNewWords" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.AddNewWordsController">
-   <children>
-      <HBox prefHeight="473.0" prefWidth="720.0">
+<BorderPane prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.AddNewWordsController">
+   <center>
+      <HBox prefHeight="480.0" prefWidth="304.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" prefHeight="396.0" prefWidth="580.0" spacing="30.0">
+            <VBox alignment="CENTER" prefHeight="480.0" prefWidth="376.0" spacing="30.0" HBox.hgrow="SOMETIMES">
                <children>
                   <MenuButton fx:id="selectLanguageMenu" mnemonicParsing="false" text="Hiszpański">
                      <items>
@@ -29,7 +30,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#selectEnglishLanguage" text="Angielski" />
                      </items>
                      <VBox.margin>
-                        <Insets top="-100.0" />
+                        <Insets bottom="-10.0" top="10.0" />
                      </VBox.margin>
                   </MenuButton>
                   <Separator prefWidth="200.0" />
@@ -59,7 +60,8 @@
                         <TextField fx:id="translationField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
-                           </font></TextField>
+                           </font>
+                        </TextField>
                         <Label alignment="CENTER" prefHeight="27.0" prefWidth="162.0" text="tłumaczenie:" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="18.0" />
@@ -83,8 +85,11 @@
                      </VBox.margin>
                   </Label>
                </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </VBox>
-            <TableView fx:id="wordsAndTranslationsTable" onMouseClicked="#selectWordTranslationTableRow" prefHeight="431.0" prefWidth="673.0" stylesheets="@table-view-style.css">
+            <TableView fx:id="wordsAndTranslationsTable" onMouseClicked="#selectWordTranslationTableRow" prefHeight="480.0" prefWidth="416.0" stylesheets="@table-view-style.css" HBox.hgrow="SOMETIMES">
                <columns>
                   <TableColumn fx:id="wordsColumn" prefWidth="204.0" text="Słówko" />
                   <TableColumn fx:id="translationsColumn" prefWidth="202.0" text="Tłumaczenie" />
@@ -99,5 +104,5 @@
             </TableView>
          </children>
       </HBox>
-   </children>
-</VBox>
+   </center>
+</BorderPane>

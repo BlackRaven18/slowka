@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -22,9 +22,79 @@
   <tabs>
     <Tab onSelectionChanged="#onTranslationTabChange" text="Tłumaczenie">
          <content>
-            <VBox alignment="CENTER">
-               <children>
-                  <ToolBar prefHeight="0.0" prefWidth="720.0">
+            <BorderPane>
+               <center>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <HBox alignment="CENTER" layoutX="339.0" layoutY="10.0" prefHeight="249.0" prefWidth="720.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Czas:  " HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="clockLabel" prefHeight="35.0" prefWidth="108.0" text="00:00:00" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" valignment="BOTTOM" VBox.vgrow="NEVER" />
+                        <GridPane prefHeight="292.0" prefWidth="720.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Słówko" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Tłumaczenie" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="wordLabel" text="el hombre" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                           </children>
+                        </GridPane>
+                        <Button mnemonicParsing="false" onAction="#checkIfCorrect" text="Sprawdź" />
+                        <Label fx:id="messageLabel" text="OK!">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </center>
+               <top>
+                  <ToolBar prefHeight="0.0" prefWidth="720.0" BorderPane.alignment="CENTER">
                      <items>
                         <Button fx:id="startClockButton" mnemonicParsing="false" onAction="#startClock" text="Start" />
                         <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="20.0" orientation="VERTICAL" prefHeight="20.0" prefWidth="0.0" />
@@ -39,76 +109,9 @@
                         <Label fx:id="translationOrderLabel" alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="121.0" text="Hiszpańsko - Polski" />
                         <Button mnemonicParsing="false" onAction="#changeTranslationOrder" text="zmień" />
                      </items>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
                   </ToolBar>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <HBox alignment="CENTER" fillHeight="false" layoutX="339.0" layoutY="10.0" prefHeight="249.0" prefWidth="720.0">
-                           <children>
-                              <Label text="Czas:  ">
-                                 <font>
-                                    <Font name="System Bold" size="24.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="clockLabel" prefHeight="35.0" prefWidth="108.0" text="00:00:00">
-                                 <font>
-                                    <Font name="System Bold" size="24.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
-                  <GridPane prefHeight="292.0" prefWidth="720.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints />
-                      <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Label text="Słówko" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label text="Tłumaczenie" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="wordLabel" text="el hombre" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </GridPane.margin>
-                        </TextField>
-                     </children>
-                  </GridPane>
-                  <Button mnemonicParsing="false" onAction="#checkIfCorrect" text="Sprawdź" />
-                  <Label fx:id="messageLabel" text="OK!">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
+               </top>
+            </BorderPane>
          </content></Tab>
     <Tab onSelectionChanged="#onAddWordsTabChange" text="Dodaj słówka">
          <content>
@@ -116,7 +119,7 @@
          </content></Tab>
       <Tab onSelectionChanged="#onMergeDatabasesTabChange" text="Połącz bazy słówek">
         <content>
-          <fx:include fx:id="mergeDatabasesView" source="merge-databases-view.fxml"/>
+          <fx:include fx:id="mergeDatabasesView" source="merge-databases-view.fxml" />
         </content>
       </Tab>
       <Tab text="Opcje" />

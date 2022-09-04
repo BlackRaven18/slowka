@@ -1,6 +1,6 @@
 package com.arek.controllers;
 
-import com.arek.database_utils.DatabaseManager;
+import com.arek.database_utils.DatabaseQuerryManager;
 import com.arek.database_utils.WordAndTranslation;
 import com.arek.language_learning_app.TranslationOrder;
 import javafx.fxml.FXML;
@@ -38,7 +38,7 @@ public class AddNewWordsController implements Initializable {
 
     private void initiateWordsAndTranslationsTableView(){
         wordsAndTranslationsTable.getItems().clear();
-        ArrayList<WordAndTranslation> wordAndTranslationList = DatabaseManager.getWordsAndTranslationsAsList(TranslationOrder.NORMAL);
+        ArrayList<WordAndTranslation> wordAndTranslationList = DatabaseQuerryManager.getWordsAndTranslationsAsList(TranslationOrder.NORMAL);
 
         wordsColumn.setCellValueFactory(new PropertyValueFactory<>("word"));
         translationsColumn.setCellValueFactory(new PropertyValueFactory<>("translation"));
@@ -53,14 +53,14 @@ public class AddNewWordsController implements Initializable {
     @FXML
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
-        DatabaseManager.changeToSpanish();
+        DatabaseQuerryManager.changeToSpanish();
         initiateWordsAndTranslationsTableView();
     }
 
     @FXML
     public void selectEnglishLanguage(){
         selectLanguageMenu.setText("Angielski");
-        DatabaseManager.changeToEnglish();
+        DatabaseQuerryManager.changeToEnglish();
         initiateWordsAndTranslationsTableView();
     }
     @FXML
@@ -86,7 +86,7 @@ public class AddNewWordsController implements Initializable {
 
     @FXML
     public void addNewWord(){
-        DatabaseManager.addWordWithTranslation(new WordAndTranslation(wordField.getText().trim(), translationField.getText().trim()));
+        DatabaseQuerryManager.addWordWithTranslation(new WordAndTranslation(wordField.getText().trim(), translationField.getText().trim()));
         initiateWordsAndTranslationsTableView();
 
         messageLabel.setText("Dodano nowe słówko");
@@ -97,7 +97,7 @@ public class AddNewWordsController implements Initializable {
     @FXML
     public void deleteWord(){
         if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
-            DatabaseManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
+            DatabaseQuerryManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
             initiateWordsAndTranslationsTableView();
 
             messageLabel.setText("Usunięto słówko");
@@ -112,7 +112,7 @@ public class AddNewWordsController implements Initializable {
             WordAndTranslation oldWordAndTranslation = getSelectedWordWithTranslation();
             WordAndTranslation newWordAndTranslation = new WordAndTranslation(wordField.getText(), translationField.getText());
 
-            DatabaseManager.changeWordWithTranslation(oldWordAndTranslation, newWordAndTranslation);
+            DatabaseQuerryManager.changeWordWithTranslation(oldWordAndTranslation, newWordAndTranslation);
             initiateWordsAndTranslationsTableView();
 
             messageLabel.setText("Zmieniono słówko");

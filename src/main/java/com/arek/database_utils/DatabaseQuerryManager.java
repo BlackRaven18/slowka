@@ -6,15 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DatabaseManager {
+public class DatabaseQuerryManager {
 
-    private static final String SPANISH_POLISH_DATABASE_URL = "jdbc:sqlite:database/spanish-polish.db";
-    private static final String ENGLISH_POLISH_DATABASE_URL = "jdbc:sqlite:database/english-polish.db";
 
-    private static String databaseURL = SPANISH_POLISH_DATABASE_URL;
+    private static String databaseURL = DatabaseInfoManager.SPANISH_POLISH_DATABASE_URL;
 
-    private static final String GET_WORDS_NUMBER_QUERRY = "SELECT COUNT(*) FROM SLOWO;";
-    private static final String GET_TRANSLATIONS_NUMBER_QUERRY = "SELECT COUNT(*) FROM TLUMACZENIE;";
     private static final String GET_WORDS_WITH_TRANSLATIONS ="SELECT sl.slowo, tl.tlumaczenie " +
             "FROM SLOWO sl, TLUMACZENIE tl " +
             "WHERE sl.id_slowa = tl.id_slowa " +
@@ -24,43 +20,72 @@ public class DatabaseManager {
             "FROM slowo sl, tlumaczenie tl\n" +
             "WHERE sl.id_slowa = tl.id_slowa;\n";
 
-    public static ArrayList<Word> getWords(){
-        ArrayList<Word> wordList = new ArrayList();
-        String querry = "SELECT * FROM SLOWO";
+
+    public static QueryResult getQuerryResult(String querry){
+        QueryResult queryResult = new QueryResult();
+        ArrayList<String> line;
 
         try(Connection connection = DriverManager.getConnection(databaseURL);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(querry)){
 
-            while(resultSet.next()){
-                wordList.add(new Word(resultSet.getInt(1), resultSet.getString(2)));
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+
+            while (resultSet.next()) {
+                line = new ArrayList<>();
+
+                for(int i = 1; i <= rsmd.getColumnCount(); i++){
+                    line.add(resultSet.getString(i));
+                }
+
+                queryResult.addNewQuerryLine(line);
             }
+
+            queryResult.writeQuerryResult();
 
         }catch (SQLException e){
             e.printStackTrace();
-            System.err.println("GET WORDS ERROR");
+            System.err.println("QUERRY RESULT ERROR");
+        }
+
+        return queryResult;
+    }
+
+    public static void executeQuerry(String querry){
+        try (Connection connection = DriverManager.getConnection(databaseURL);
+             Statement statement = connection.createStatement()){
+            statement.executeUpdate(querry);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.err.println("EXECUTE QUERRY ERROR");
+        }
+    }
+
+    public static ArrayList<Word> getWords(){
+        String querry = "SELECT * FROM SLOWO";
+        QueryResult queryResult = getQuerryResult(querry);
+
+        ArrayList<Word> wordList = new ArrayList<>();
+        for(int i = 0; i < queryResult.getQuerryLines(); i++){
+            ArrayList<String> line = queryResult.getQuerryLine(i);
+            Word word = new Word(Integer.parseInt(line.get(0)), line.get(1));
+            wordList.add(word);
         }
 
         return wordList;
     }
 
     public static ArrayList<Translation> getTranslations(){
-        ArrayList<Translation> translationList = new ArrayList();
         String querry = "SELECT * FROM TLUMACZENIE";
+        QueryResult queryResult = getQuerryResult(querry);
 
-        try(Connection connection = DriverManager.getConnection(databaseURL);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(querry)){
-
-            while(resultSet.next()){
-                translationList.add(new Translation(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3)));
-            }
-
-        }catch (SQLException e){
-            e.printStackTrace();
-            System.err.println("GET TRANSLATIONS ERROR");
+        ArrayList<Translation> translationList = new ArrayList<>();
+        for(int i = 0; i < queryResult.getQuerryLines(); i++){
+            ArrayList<String> line = queryResult.getQuerryLine(i);
+            Translation translation = new Translation(Integer.parseInt(line.get(0)), line.get(1), Integer.parseInt(line.get(2)));
+            translationList.add(translation);
         }
-
         return translationList;
     }
 
@@ -412,10 +437,10 @@ public class DatabaseManager {
 
 
     public static void changeToSpanish(){
-        databaseURL = SPANISH_POLISH_DATABASE_URL;
+        databaseURL = DatabaseInfoManager.SPANISH_POLISH_DATABASE_URL;
     }
     public static void changeToEnglish(){
-        databaseURL = ENGLISH_POLISH_DATABASE_URL;
+        databaseURL = DatabaseInfoManager.ENGLISH_POLISH_DATABASE_URL;
     }
     public static void changeToOtherDatabase(String URL){
         databaseURL = URL;
