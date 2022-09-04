@@ -35,13 +35,16 @@ public class ClockManager {
     private Label clockLabel;
     private Stage stage;
 
-    private int remainingTime = CLOCK_TIME;
+    private int remainingTime;
 
     private ClockManager(){
         isClockRunning = false;
         showRemainingTimeTimer = new Timer();
         showWindowTimer = new Timer();
         hideWindowTimer = new Timer();
+
+        AppOptions appOptions = AppOptions.getInstance();
+        remainingTime = appOptions.getClockTime();
     }
 
     public static ClockManager getInstance(){

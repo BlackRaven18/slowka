@@ -122,7 +122,11 @@
           <fx:include fx:id="mergeDatabasesView" source="merge-databases-view.fxml" />
         </content>
       </Tab>
-      <Tab text="Opcje" />
+      <Tab text="Opcje">
+      <content>
+          <fx:include fx:id="options" source="options-view.fxml" />
+      </content>
+        </Tab>
   </tabs>
    <padding>
       <Insets bottom="10.0" />

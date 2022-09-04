@@ -17,28 +17,31 @@ public class Main extends Application {
         mainStage = stage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/arek/main-dashboard-view.fxml"));
+        AppOptions options = AppOptions.getInstance();
 
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+
+        Scene scene = new Scene(fxmlLoader.load(),options.getPrefAppWidth(), options.getPrefAppHeight());
 
         //TrayIcon
 
-//        FXTrayIcon trayIcon = new FXTrayIcon.Builder(stage, new File("icon.png"))
+//        FXTrayIcon trayIcon = new FXTrayIcon.Builder(stage, options.APP_TRAY_ICON)
 //                .menuItem("Show", e -> { stage.show();})
 //                .addExitMenuItem("Exit")
 //                .show()
 //                .build();
 
 
-        stage.setTitle("Słówka");
-        stage.setMinWidth(600);
-        stage.setMinHeight(400);
+        stage.setTitle(options.APP_TITLE);
+        stage.setMinWidth(options.getMinAppWidth());
+        stage.setMinHeight(options.getMinAppHeight());
+        stage.getIcons().add(options.APP_ICON);
         stage.setScene(scene);
-        stage.getIcons().add(new Image("file:icon.png"));
         stage.show();
 
         // clock stage
         ClockManager clockManager = ClockManager.getInstance();
         clockManager.setStage(stage);
+
 
     }
 
