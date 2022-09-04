@@ -1,15 +1,13 @@
 package com.arek.controllers;
 
-import com.arek.database_utils.DatabaseQuerryManager;
 import com.arek.language_learning_app.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -79,8 +77,13 @@ public class MainDashboardController implements Initializable {
     @FXML
     public void checkIfCorrect(){
 
+        if(translationField.getText().isEmpty()){
+            setMessageLabel(Color.BLACK, "");
+            return;
+        }
+
         if(wordAndTranslationsManager.checkTranslation(wordLabel.getText(), translationField.getText())){
-            messageLabel.setText("OK!!!");
+            setMessageLabel(Color.GREEN, "OK!!!");
             translationField.setText("");
             loadWordLabel();
 
@@ -89,7 +92,7 @@ public class MainDashboardController implements Initializable {
             }
 
         } else{
-            messageLabel.setText("NIE OK!!!");
+            setMessageLabel(Color.RED, "NIE OK!!!");
         }
 
         translationField.setText("");
@@ -162,6 +165,11 @@ public class MainDashboardController implements Initializable {
         selectLanguageMenu.setText("Angielski");
         wordAndTranslationsManager.selectEnglishLanguage();
         loadWordLabel();
+    }
+
+    private void setMessageLabel(Color color, String text){
+        messageLabel.setTextFill(color);
+        messageLabel.setText(text);
     }
 
 

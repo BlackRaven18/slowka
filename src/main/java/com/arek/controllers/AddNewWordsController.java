@@ -1,12 +1,15 @@
 package com.arek.controllers;
 
-import com.arek.database_utils.DatabaseQuerryManager;
+import com.arek.database_utils.DatabaseQueryManager;
 import com.arek.database_utils.WordAndTranslation;
 import com.arek.language_learning_app.TranslationOrder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ public class AddNewWordsController implements Initializable {
 
     private void initiateWordsAndTranslationsTableView(){
         wordsAndTranslationsTable.getItems().clear();
-        ArrayList<WordAndTranslation> wordAndTranslationList = DatabaseQuerryManager.getWordsAndTranslationsAsList(TranslationOrder.NORMAL);
+        ArrayList<WordAndTranslation> wordAndTranslationList = DatabaseQueryManager.getWordsAndTranslationsAsList(TranslationOrder.NORMAL);
 
         wordsColumn.setCellValueFactory(new PropertyValueFactory<>("word"));
         translationsColumn.setCellValueFactory(new PropertyValueFactory<>("translation"));
@@ -53,14 +56,14 @@ public class AddNewWordsController implements Initializable {
     @FXML
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
-        DatabaseQuerryManager.changeToSpanish();
+        DatabaseQueryManager.changeToSpanish();
         initiateWordsAndTranslationsTableView();
     }
 
     @FXML
     public void selectEnglishLanguage(){
         selectLanguageMenu.setText("Angielski");
-        DatabaseQuerryManager.changeToEnglish();
+        DatabaseQueryManager.changeToEnglish();
         initiateWordsAndTranslationsTableView();
     }
     @FXML
@@ -86,39 +89,68 @@ public class AddNewWordsController implements Initializable {
 
     @FXML
     public void addNewWord(){
-        DatabaseQuerryManager.addWordWithTranslation(new WordAndTranslation(wordField.getText().trim(), translationField.getText().trim()));
-        initiateWordsAndTranslationsTableView();
+        trimTextFieldsContent();
 
-        messageLabel.setText("Dodano nowe słówko");
-        wordField.setText("");
-        translationField.setText("");
+        if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()) {
+            DatabaseQueryManager.addWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
+            initiateWordsAndTranslationsTableView();
+
+            setMessageLabel(Color.GREEN, "Dodano nowe słówko");
+            wordField.setText("");
+            translationField.setText("");
+        }else {
+            setMessageLabel(Color.BLACK, "Pola nie mogą być puste!");
+        }
     }
 
     @FXML
     public void deleteWord(){
+        trimTextFieldsContent();
+
         if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
-            DatabaseQuerryManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
+            DatabaseQueryManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
             initiateWordsAndTranslationsTableView();
 
-            messageLabel.setText("Usunięto słówko");
+            setMessageLabel(Color.RED, "Usunięto słówko!");
             wordField.setText("");
             translationField.setText("");
+        }else {
+            setMessageLabel(Color.BLACK, "Pola nie mogą być puste!");
         }
     }
 
     @FXML
     public void changeWord(){
+        trimTextFieldsContent();
+
         if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
             WordAndTranslation oldWordAndTranslation = getSelectedWordWithTranslation();
             WordAndTranslation newWordAndTranslation = new WordAndTranslation(wordField.getText(), translationField.getText());
 
-            DatabaseQuerryManager.changeWordWithTranslation(oldWordAndTranslation, newWordAndTranslation);
+            DatabaseQueryManager.changeWordWithTranslation(oldWordAndTranslation, newWordAndTranslation);
             initiateWordsAndTranslationsTableView();
 
-            messageLabel.setText("Zmieniono słówko");
+            setMessageLabel(Color.DARKORANGE, "Zmieniono słówko!");
             wordField.setText("");
             translationField.setText("");
+        }else {
+            setMessageLabel(Color.BLACK, "Pola nie mogą być puste!");        }
+    }
+
+    private void trimTextFieldsContent(){
+        wordField.setText(wordField.getText().trim());
+        translationField.setText(translationField.getText().trim());
+    }
+
+    @FXML
+    public void addWordWhenEnterPressed(KeyEvent event){
+        if(event.getCode().equals(KeyCode.ENTER)){
+            addNewWord();
         }
     }
 
+    private void setMessageLabel(Color color, String text){
+        messageLabel.setTextFill(color);
+        messageLabel.setText(text);
+    }
 }

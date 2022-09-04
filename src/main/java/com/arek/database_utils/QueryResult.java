@@ -4,32 +4,25 @@ import java.util.ArrayList;
 
 public class QueryResult {
 
-    private final ArrayList<ArrayList<String>> querryResult;
+    private final ArrayList<ArrayList<String>> queryResult;
 
     public QueryResult(){
-        querryResult = new ArrayList<>();
+        queryResult = new ArrayList<>();
     };
 
-    public void addNewQuerryLine(ArrayList<String> line){
-        querryResult.add(line);
+    public void addNewQueryLine(ArrayList<String> line){
+        queryResult.add(line);
     }
 
-    public ArrayList<String> getQuerryLine(int index){
-        return querryResult.get(index);
+    public ArrayList<String> getQueryLine(int index){
+        return queryResult.get(index);
     }
 
-    public void writeQuerryResult(){
-
-        for(int i = 0; i < querryResult.size(); i++){
-            for(int j = 0; j < querryResult.get(i).size(); j++){
-                System.out.print(querryResult.get(i).get(j) + " ");
-            }
-            System.out.println("");
-        }
+    public int getQueryLines(){
+        return queryResult.size();
     }
-
-    public int getQuerryLines(){
-        return querryResult.size();
+    public boolean isEmpty(){
+        return queryResult.isEmpty();
     }
 
 

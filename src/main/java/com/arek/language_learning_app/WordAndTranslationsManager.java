@@ -1,7 +1,6 @@
 package com.arek.language_learning_app;
 
-import com.arek.database_utils.DatabaseQuerryManager;
-import javafx.scene.control.Label;
+import com.arek.database_utils.DatabaseQueryManager;
 
 import java.util.*;
 
@@ -28,17 +27,17 @@ public class WordAndTranslationsManager {
 
         switch(selectedLanguage){
             case SPANISH:
-                DatabaseQuerryManager.changeToSpanish();
+                DatabaseQueryManager.changeToSpanish();
                 break;
             case ENGLISH:
-                DatabaseQuerryManager.changeToEnglish();
+                DatabaseQueryManager.changeToEnglish();
                 break;
             default:
-                DatabaseQuerryManager.changeToSpanish();
+                DatabaseQueryManager.changeToSpanish();
                 break;
         }
 
-        wordsAndTranslations = DatabaseQuerryManager.getWordsAndTranslations(translationOrder);
+        wordsAndTranslations = DatabaseQueryManager.getWordsAndTranslations(translationOrder);
         loadWordsAndTranslationsKeys();
     }
 

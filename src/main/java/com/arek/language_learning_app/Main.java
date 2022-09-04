@@ -3,6 +3,7 @@ package com.arek.language_learning_app;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class Main extends Application {
         stage.setMinWidth(600);
         stage.setMinHeight(400);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("file:icon.png"));
         stage.show();
 
         // clock stage

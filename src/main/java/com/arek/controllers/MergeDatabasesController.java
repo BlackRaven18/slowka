@@ -1,7 +1,7 @@
 package com.arek.controllers;
 
 import com.arek.database_utils.DatabaseBackupManager;
-import com.arek.database_utils.DatabaseQuerryManager;
+import com.arek.database_utils.DatabaseQueryManager;
 import com.arek.database_utils.DatabaseMergeManager;
 import com.arek.language_learning_app.Languages;
 import com.arek.language_learning_app.Main;
@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -38,6 +39,7 @@ public class MergeDatabasesController implements Initializable {
     public void addDatabaseFile(){
         databaseFile = fileChooser.showOpenDialog(Main.getMainStage());
         if(databaseFile != null){
+            setMessageLabel(Color.BLACK, "");
             fileLabel.setText(databaseFile.getName());
         }
     }
@@ -55,7 +57,9 @@ public class MergeDatabasesController implements Initializable {
             DatabaseMergeManager databaseMergeManager = new DatabaseMergeManager(language, databaseFile);
 
             databaseMergeManager.mergeDatabases();
-            messageLabel.setText("Połączono bazy słówek!");
+            setMessageLabel(Color.GREEN, "Połączono bazy słówek!");
+        } else{
+            setMessageLabel(Color.RED, "Musisz wybrać bazę słowek, którą chcesz połączyć!");
         }
     }
 
@@ -63,7 +67,7 @@ public class MergeDatabasesController implements Initializable {
     public void selectSpanishLanguage(){
         selectLanguageMenu.setText("Hiszpański");
         language = Languages.SPANISH;
-        DatabaseQuerryManager.changeToSpanish();
+        DatabaseQueryManager.changeToSpanish();
         resetDatabaseFile();
     }
 
@@ -71,7 +75,12 @@ public class MergeDatabasesController implements Initializable {
     public void selectEnglishLanguage(){
         selectLanguageMenu.setText("Angielski");
         language = Languages.ENGLISH;
-        DatabaseQuerryManager.changeToEnglish();
+        DatabaseQueryManager.changeToEnglish();
         resetDatabaseFile();
+    }
+
+    private void setMessageLabel(Color color, String text){
+        messageLabel.setTextFill(color);
+        messageLabel.setText(text);
     }
 }

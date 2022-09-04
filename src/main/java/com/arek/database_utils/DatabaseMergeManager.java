@@ -25,18 +25,18 @@ public class DatabaseMergeManager {
 
         String URL = String.format("jdbc:sqlite:%s", this.newDatabaseFile.getAbsolutePath());
 
-        DatabaseQuerryManager.changeToOtherDatabase(URL);
+        DatabaseQueryManager.changeToOtherDatabase(URL);
 
         newWordTable = loadWordTable();
         newTranslationTable = loadTranslationTable();
     }
 
     private ArrayList<Word> loadWordTable(){
-        return DatabaseQuerryManager.getWords();
+        return DatabaseQueryManager.getWords();
     }
 
     private ArrayList<Translation> loadTranslationTable(){
-        return DatabaseQuerryManager.getTranslations();
+        return DatabaseQueryManager.getTranslations();
     }
 
     public void mergeDatabases(){
@@ -53,10 +53,10 @@ public class DatabaseMergeManager {
 
         switch(language){
             case SPANISH:
-                DatabaseQuerryManager.changeToSpanish();
+                DatabaseQueryManager.changeToSpanish();
                 break;
             case ENGLISH:
-                DatabaseQuerryManager.changeToEnglish();
+                DatabaseQueryManager.changeToEnglish();
                 break;
         }
 
@@ -164,9 +164,9 @@ public class DatabaseMergeManager {
     }
 
     private void addMergedDataToDatabase(){
-        DatabaseQuerryManager.clearDatabase();
-        DatabaseQuerryManager.addWordsToWordTable(srcWordTable);
-        DatabaseQuerryManager.addTranslationsToTranslationTable(srcTranslationTable);
+        DatabaseQueryManager.clearDatabase();
+        DatabaseQueryManager.addWordsToWordTable(srcWordTable);
+        DatabaseQueryManager.addTranslationsToTranslationTable(srcTranslationTable);
     }
 
 
