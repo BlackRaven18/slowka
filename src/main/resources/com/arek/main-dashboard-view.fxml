@@ -122,7 +122,7 @@
           <fx:include fx:id="mergeDatabasesView" source="merge-databases-view.fxml" />
         </content>
       </Tab>
-      <Tab text="Opcje">
+      <Tab onSelectionChanged="#onOptionsTabChange" text="Opcje">
       <content>
           <fx:include fx:id="options" source="options-view.fxml" />
       </content>

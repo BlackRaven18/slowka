@@ -1,5 +1,6 @@
-package com.arek.language_learning_app;
+package com.arek.clock_utils;
 
+import com.arek.language_learning_app.AppOptions;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,20 +10,24 @@ import javafx.stage.Stage;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@SuppressWarnings("FieldCanBeLocal")
+
 public class ClockManager {
 
     private static ClockManager instance;
+
+    private final AppOptions appOptions;
 
     private boolean isClockRunning;
 
     private Button startButton, stopButton;
 
-    private final int CLOCK_TIME = 20;
     private final long DELAY = 1000;
     private final long PERIOD = 1000;
-    private final long SHOW_WINDOW_DELAY = 1000 * CLOCK_TIME;
     private final long HIDE_WINDOW_DELAY = 100;
+    private long SHOW_WINDOW_DELAY;
 
+    private Time time;
 
     private TimerTask showRemainingTime;
     private TimerTask showWindow;
@@ -35,16 +40,17 @@ public class ClockManager {
     private Label clockLabel;
     private Stage stage;
 
-    private int remainingTime;
-
     private ClockManager(){
+        appOptions = AppOptions.getInstance();
+
+        time = appOptions.getClockTime();
+
+        SHOW_WINDOW_DELAY = 1000 * time.getTimeConvertedToSeconds();
+
         isClockRunning = false;
         showRemainingTimeTimer = new Timer();
         showWindowTimer = new Timer();
         hideWindowTimer = new Timer();
-
-        AppOptions appOptions = AppOptions.getInstance();
-        remainingTime = appOptions.getClockTime();
     }
 
     public static ClockManager getInstance(){
@@ -60,8 +66,7 @@ public class ClockManager {
         this.startButton = startButton;
         this.stopButton = stopButton;
 
-        String timeFormat = String.format("00:00:%02d", CLOCK_TIME);
-        this.clockLabel.setText(timeFormat);
+        setClockTime();
     }
 
     private void manageButtons(){
@@ -80,22 +85,19 @@ public class ClockManager {
             @Override
             public void run() {
                 Platform.runLater(() ->{
-                    int time = setTime();
-
-                    String timeFormat = String.format("00:00:%02d", time);
-                    clockLabel.setText(timeFormat);
+                    updateTimer();
+                    setClockTime();
                 });
             }
         };
         showRemainingTimeTimer.scheduleAtFixedRate(showRemainingTime, DELAY, PERIOD);
     }
 
-    private int setTime(){
-        if(remainingTime == 1){
+    private void updateTimer(){
+        if(time.getTimeConvertedToSeconds() == 1){
             showRemainingTimeTimer.cancel();
         }
-
-        return --remainingTime;
+         time.updateTimeAfterOneSecond();
     }
 
     public void startShowingWindowPeriodically(){
@@ -132,9 +134,14 @@ public class ClockManager {
     public void startClock(){
         isClockRunning = true;
 
+        resetTime();
+
+        SHOW_WINDOW_DELAY = 1000 * time.getTimeConvertedToSeconds();
+
         manageButtons();
 
-        remainingTime = CLOCK_TIME;
+        resetClockTime();
+        setClockTime();
 
         getNewTimers();
         startShowingRemainingTime();
@@ -145,12 +152,29 @@ public class ClockManager {
     public void stopClock(){
         isClockRunning = false;
 
+        resetTime();
+        SHOW_WINDOW_DELAY = 1000 * time.getTimeConvertedToSeconds();
+
+
         manageButtons();
 
-        String timeFormat = String.format("00:00:%02d", CLOCK_TIME);
-        clockLabel.setText(timeFormat);
+        resetClockTime();
+        setClockTime();
 
         stopTimers();
+    }
+
+    private void resetTime(){
+        time = appOptions.getClockTime();
+    }
+
+    public void setClockTime(){
+        String timeFormat = String.format("%02d:%02d:%02d", time.getHours(), time.getMinutes(), time.getSeconds());
+        clockLabel.setText(timeFormat);
+    }
+
+    public void resetClockTime(){
+        time = appOptions.getClockTime();
     }
 
     private void getNewTimers(){

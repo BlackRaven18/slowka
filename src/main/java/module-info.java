@@ -16,5 +16,7 @@ module com.arek{
     opens com.arek.controllers to javafx.fxml;
     exports com.arek.database_utils;
     opens com.arek.database_utils to javafx.fxml;
+    exports com.arek.clock_utils;
+    opens com.arek.clock_utils to javafx.fxml;
 
 }

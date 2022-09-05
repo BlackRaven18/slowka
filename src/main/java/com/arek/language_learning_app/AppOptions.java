@@ -1,8 +1,11 @@
 package com.arek.language_learning_app;
 
+import com.arek.clock_utils.Time;
 import javafx.scene.image.Image;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 
 @SuppressWarnings("unused")
@@ -10,20 +13,24 @@ public final class AppOptions {
 
     private static AppOptions instance;
 
+    private final File optionsFile = new File("options.txt");
+
     public final String APP_TITLE = "Słówka";
     public final Image APP_ICON = new Image("file:icon.png");
     public final File APP_TRAY_ICON = new File("icon.png");
 
-    private int clockTime = 20;
+    private long clockHours;
+    private long clockMinutes;
+    private long clockSeconds;
 
-    private int prefAppWidth = 720;
-    private int prefAppHeight = 480;
+    private int prefAppWidth;
+    private int prefAppHeight;
 
-    private int minAppWidth = 600;
-    private int minAppHeight = 400;
+    private int minAppWidth;
+    private int minAppHeight;
 
     private AppOptions(){
-
+        readOptionsFromFile();
     }
 
     public static AppOptions getInstance(){
@@ -34,13 +41,55 @@ public final class AppOptions {
         return instance;
     }
 
-    public int getClockTime() {
-        return clockTime;
+    private void readOptionsFromFile(){
+        try(BufferedReader reader = new BufferedReader(new FileReader(optionsFile))){
+            String line = reader.readLine();
+
+            StringTokenizer stringTokenizer = new StringTokenizer(line, ",");
+            ArrayList<String> tokens = new ArrayList<>();
+            while(stringTokenizer.hasMoreTokens()){
+                tokens.add(stringTokenizer.nextToken());
+            }
+
+            prefAppWidth = Integer.parseInt(tokens.get(0));
+            prefAppHeight = Integer.parseInt(tokens.get(1));
+            minAppWidth = Integer.parseInt(tokens.get(2));
+            minAppHeight = Integer.parseInt(tokens.get(3));
+            clockHours = Integer.parseInt(tokens.get(4));
+            clockMinutes = Integer.parseInt(tokens.get(5));
+            clockSeconds = Integer.parseInt(tokens.get(6));
+
+        } catch (IOException e){
+            e.printStackTrace();
+            setDefaultOptions();
+        }
     }
 
-    public void setClockTime(int clockTime) {
-        this.clockTime = clockTime;
+    public void saveOptionsToFile(){
+        try(PrintWriter writer = new PrintWriter(optionsFile)){
+            String line = String.format("%d,%d,%d,%d,%d,%d,%d", prefAppWidth, prefAppHeight, minAppWidth, minAppHeight, clockHours, clockMinutes, clockSeconds);
+            writer.write(line);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
+
+    private void setDefaultOptions(){
+        prefAppWidth = 720;
+        prefAppHeight = 480;
+
+        minAppWidth = 600;
+        minAppHeight = 400;
+
+        clockHours = 0;
+        clockMinutes = 30;
+        clockSeconds = 0;
+    }
+
+    public Time getClockTime() {
+        return new Time(clockHours, clockMinutes, clockSeconds);
+    }
+
 
     public int getPrefAppWidth() {
         return prefAppWidth;
@@ -72,5 +121,21 @@ public final class AppOptions {
 
     public void setMinAppHeight(int minAppHeight) {
         this.minAppHeight = minAppHeight;
+    }
+
+    public File getOptionsFile() {
+        return optionsFile;
+    }
+
+    public void setClockHours(long clockHours) {
+        this.clockHours = clockHours;
+    }
+
+    public void setClockMinutes(long clockMinutes) {
+        this.clockMinutes = clockMinutes;
+    }
+
+    public void setClockSeconds(long clockSeconds) {
+        this.clockSeconds = clockSeconds;
     }
 }
