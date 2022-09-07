@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="spanishAccentsBox" alignment="TOP_CENTER" fillHeight="false" prefHeight="50.0" prefWidth="720.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.SpanishAccentsBoxController">
+   <children>
+      <Button mnemonicParsing="false" onAction="#insertFirstAccent" prefHeight="25.0" prefWidth="25.0" text="á">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="é">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="í">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="ó">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="ú">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="ü">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="ñ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="¿">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="¡">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</HBox>

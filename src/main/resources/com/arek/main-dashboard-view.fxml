@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="470.0" prefWidth="720.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.MainDashboardController">
+<TabPane fx:id="mainDashboardView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="470.0" prefWidth="720.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.MainDashboardController">
   <tabs>
     <Tab onSelectionChanged="#onTranslationTabChange" text="Tłumaczenie">
          <content>
@@ -45,15 +45,15 @@
                            </children>
                         </HBox>
                         <Separator prefWidth="200.0" valignment="BOTTOM" VBox.vgrow="NEVER" />
-                        <GridPane prefHeight="292.0" prefWidth="720.0">
+                        <GridPane prefHeight="214.0" prefWidth="720.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints />
-                            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="396.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Słówko" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -81,6 +81,9 @@
                               </TextField>
                            </children>
                         </GridPane>
+                        <HBox prefHeight="86.0" prefWidth="720.0">
+                            <fx:include fx:id="spanishAccentsBox" source="spanish-accents-box.fxml" />
+                        </HBox>
                         <Button mnemonicParsing="false" onAction="#checkIfCorrect" text="Sprawdź" />
                         <Label fx:id="messageLabel" text="OK!">
                            <VBox.margin>

@@ -2,6 +2,7 @@ package com.arek.controllers;
 
 import com.arek.clock_utils.ClockManager;
 import com.arek.language_learning_app.*;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -43,6 +44,7 @@ public class MainDashboardController implements Initializable {
 
         clockManager = ClockManager.getInstance();
         clockManager.prepareClock(clockLabel, startClockButton, stopClockButton);
+
     }
 
 
@@ -185,7 +187,6 @@ public class MainDashboardController implements Initializable {
         messageLabel.setTextFill(color);
         messageLabel.setText(text);
     }
-
 
 }
 
