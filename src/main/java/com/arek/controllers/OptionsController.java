@@ -3,6 +3,7 @@ package com.arek.controllers;
 import com.arek.clock_utils.ClockManager;
 import com.arek.language_learning_app.AppOptions;
 import com.arek.language_learning_app.Main;
+import com.arek.language_learning_app.TextFieldFormatConfigurator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -21,12 +22,16 @@ public class OptionsController implements Initializable {
     @FXML private TextField prefAppWidthField, prefAppHeightField, minAppWidthField, minAppHeightField;
     @FXML private Label messageLabel;
 
+    private int hours, minutes, seconds, prefWidth, prefHeight, minWidth, minHeight;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         options = AppOptions.getInstance();
 
         setMessageLabel(Color.BLACK, "");
+
+        configureTextFields();
 
         hoursField.setText(String.valueOf(options.getClockTime().getHours()));
         minutesField.setText((String.valueOf(options.getClockTime().getMinutes())));
@@ -38,6 +43,30 @@ public class OptionsController implements Initializable {
         minAppWidthField.setText((String.valueOf(options.getMinAppWidth())));
         minAppHeightField.setText((String.valueOf(options.getMinAppHeight())));
 
+        readFromTextFields();
+    }
+
+    private void configureTextFields(){
+        TextFieldFormatConfigurator configurator = new TextFieldFormatConfigurator();
+        configurator.configureNumericTextField(hoursField, TextFieldFormatConfigurator.intFormat);
+        configurator.configureNumericTextField(minutesField, TextFieldFormatConfigurator.intFormat);
+        configurator.configureNumericTextField(secondsField, TextFieldFormatConfigurator.intFormat);
+        configurator.configureNumericTextField(prefAppWidthField, TextFieldFormatConfigurator.intFormat);
+        configurator.configureNumericTextField(prefAppHeightField, TextFieldFormatConfigurator.intFormat);
+        configurator.configureNumericTextField(minAppWidthField, TextFieldFormatConfigurator.intFormat);
+        configurator.configureNumericTextField(minAppHeightField, TextFieldFormatConfigurator.intFormat);
+    }
+
+    private void readFromTextFields(){
+        hours = Integer.parseInt(hoursField.getText());
+        minutes = Integer.parseInt(minutesField.getText());
+        seconds = Integer.parseInt(secondsField.getText());
+
+        prefWidth = Integer.parseInt(prefAppWidthField.getText());
+        prefHeight = Integer.parseInt(prefAppHeightField.getText());
+
+        minWidth = Integer.parseInt(minAppWidthField.getText());
+        minHeight = Integer.parseInt(minAppHeightField.getText());
     }
 
     @FXML
@@ -48,21 +77,42 @@ public class OptionsController implements Initializable {
             return;
         }
 
-        options.setPrefAppWidth(Integer.parseInt(prefAppWidthField.getText()));
-        options.setPrefAppHeight(Integer.parseInt(prefAppHeightField.getText()));
+        checkIfOptionsAreCorrect();
 
-        options.setMinAppWidth(Integer.parseInt(minAppWidthField.getText()));
-        options.setMinAppHeight(Integer.parseInt(minAppHeightField.getText()));
+        options.setPrefAppWidth(prefWidth);
+        options.setPrefAppHeight(prefHeight);
 
-        options.setClockHours(Integer.parseInt(hoursField.getText()));
-        options.setClockMinutes(Integer.parseInt(minutesField.getText()));
-        options.setClockSeconds(Integer.parseInt(secondsField.getText()));
+        options.setMinAppWidth(minWidth);
+        options.setMinAppHeight(minHeight);
+
+        options.setClockHours(hours);
+        options.setClockMinutes(minutes);
+        options.setClockSeconds(seconds);
 
         options.saveOptionsToFile();
 
         updateApp();
 
         setMessageLabel(Color.GREEN, "Zmienono ustawienia!");
+    }
+
+    private void checkIfOptionsAreCorrect(){
+
+        readFromTextFields();
+
+        if(prefWidth < 300){ prefAppWidthField.setText("300");}
+        if(prefHeight < 250){ prefAppHeightField.setText("250");}
+        if(minWidth < 300){minAppWidthField.setText("300");}
+        if(minHeight < 250){ minAppHeightField.setText("250");}
+        if(hours > 60){ hoursField.setText("60");}
+        if(minutes > 60){ minutesField.setText("60");}
+        if(seconds > 60) {secondsField.setText("60");}
+        if(hours <= 0 && minutes <= 0 || seconds <= 0){
+            hoursField.setText("0");
+            minutesField.setText("0");
+            secondsField.setText("1");
+        }
+        readFromTextFields();
     }
 
     private void updateApp(){

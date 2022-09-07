@@ -145,6 +145,7 @@ public class AddNewWordsController implements Initializable {
     @FXML
     public void addWordWhenEnterPressed(KeyEvent event){
         if(event.getCode().equals(KeyCode.ENTER)){
+            wordField.requestFocus();
             addNewWord();
         }
     }
