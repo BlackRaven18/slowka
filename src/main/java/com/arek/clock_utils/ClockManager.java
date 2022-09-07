@@ -120,8 +120,8 @@ public class ClockManager {
             public void run() {
                 Platform.runLater(() ->{
                     // hiding window
-                    //stage.hide();
-                    stage.setIconified(true);
+                    stage.hide();
+                    //stage.setIconified(true);
                 });
             }
         };

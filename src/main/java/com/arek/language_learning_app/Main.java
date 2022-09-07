@@ -1,6 +1,7 @@
 package com.arek.language_learning_app;
 
 import com.arek.clock_utils.ClockManager;
+import com.dustinredmond.fxtrayicon.FXTrayIcon;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,11 +25,11 @@ public class Main extends Application {
 
         //TrayIcon
 
-//        FXTrayIcon trayIcon = new FXTrayIcon.Builder(stage, options.APP_TRAY_ICON)
-//                .menuItem("Show", e -> { stage.show();})
-//                .addExitMenuItem("Exit")
-//                .show()
-//                .build();
+        FXTrayIcon trayIcon = new FXTrayIcon.Builder(stage, options.APP_TRAY_ICON)
+                .menuItem("Pokaż", e -> { stage.show();})
+                .addExitMenuItem("Zakończ")
+                .show()
+                .build();
 
 
         stage.setTitle(options.APP_TITLE);
