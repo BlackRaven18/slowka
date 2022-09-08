@@ -1,6 +1,7 @@
 package com.arek.controllers;
 
 import com.arek.database_utils.DatabaseQueryManager;
+import com.arek.database_utils.DatabaseResponse;
 import com.arek.database_utils.WordAndTranslation;
 import com.arek.language_learning_app.AppOptions;
 import com.arek.language_learning_app.TranslationOrder;
@@ -96,7 +97,11 @@ public class AddNewWordsController implements Initializable {
         trimTextFieldsContent();
 
         if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()) {
-            DatabaseQueryManager.addWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
+            if(DatabaseQueryManager.addWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()))
+                == DatabaseResponse.DB_ALREADY_IN){
+                setMessageLabel(Color.BLACK, "Słówko z tym tłumaczeniem jest już w bazie");
+                return;
+            }
             initiateWordsAndTranslationsTableView();
 
             setMessageLabel(Color.GREEN, "Dodano nowe słówko");
@@ -112,7 +117,11 @@ public class AddNewWordsController implements Initializable {
         trimTextFieldsContent();
 
         if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
-            DatabaseQueryManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()));
+            if(DatabaseQueryManager.deleteWordWithTranslation(new WordAndTranslation(wordField.getText(), translationField.getText()))
+                    == DatabaseResponse.DB_NOT_FOUND){
+                setMessageLabel(Color.RED, "Nie znaleziono takiego słówka lub tłumaczenia!");
+                return;
+            }
             initiateWordsAndTranslationsTableView();
 
             setMessageLabel(Color.RED, "Usunięto słówko!");
@@ -129,9 +138,18 @@ public class AddNewWordsController implements Initializable {
 
         if(!wordField.getText().isEmpty() && !translationField.getText().isEmpty()){
             WordAndTranslation oldWordAndTranslation = getSelectedWordWithTranslation();
+            if(oldWordAndTranslation == null){
+                setMessageLabel(Color.RED, "Najpierw wybierz słówko z listy!");
+                return;
+            }
+
             WordAndTranslation newWordAndTranslation = new WordAndTranslation(wordField.getText(), translationField.getText());
 
-            DatabaseQueryManager.changeWordWithTranslation(oldWordAndTranslation, newWordAndTranslation);
+            if(DatabaseQueryManager.changeWordWithTranslation(oldWordAndTranslation, newWordAndTranslation) == DatabaseResponse.DB_NOT_FOUND){
+                setMessageLabel(Color.RED, "Nie znaleziono takiego słówka!");
+                return;
+            }
+
             initiateWordsAndTranslationsTableView();
 
             setMessageLabel(Color.DARKORANGE, "Zmieniono słówko!");

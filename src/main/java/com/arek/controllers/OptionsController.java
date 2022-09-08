@@ -1,6 +1,5 @@
 package com.arek.controllers;
 
-import com.arek.clock_utils.ClockManager;
 import com.arek.language_learning_app.AppOptions;
 import com.arek.language_learning_app.Main;
 import com.arek.language_learning_app.TextFieldFormatConfigurator;
@@ -107,7 +106,7 @@ public class OptionsController implements Initializable {
         if(hours > 60){ hoursField.setText("60");}
         if(minutes > 60){ minutesField.setText("60");}
         if(seconds > 60) {secondsField.setText("60");}
-        if(hours <= 0 && minutes <= 0 || seconds <= 0){
+        if(hours <= 0 && minutes <= 0 && seconds <= 0){
             hoursField.setText("0");
             minutesField.setText("0");
             secondsField.setText("1");

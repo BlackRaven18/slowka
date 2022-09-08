@@ -151,24 +151,29 @@ public class DatabaseQueryManager {
         return wordAndTranslationList;
     }
 
-    public static void addWordWithTranslation(WordAndTranslation wordWithTranslation){
+    public static DatabaseResponse addWordWithTranslation(WordAndTranslation wordWithTranslation){
 
         int newWordId;
 
+        //if word is in database
         if(isWordInDatabase(wordWithTranslation.getWord())){
             newWordId = getWordId(wordWithTranslation.getWord());
 
+            //if translation is in database
             if(isTranslationInDatabase(newWordId, wordWithTranslation.getTranslation())){
-                return;
+                return DatabaseResponse.DB_ALREADY_IN;
             }
-
+            // adding new translations to the existing word
             addNewTranslation(newWordId, wordWithTranslation.getTranslation());
 
         } else {
+            //adding new word with translation
             addNewWord(wordWithTranslation.getWord());
             newWordId = getWordId(wordWithTranslation.getWord());
             addNewTranslation(newWordId, wordWithTranslation.getTranslation());
         }
+
+        return DatabaseResponse.DB_OK;
     }
 
     private static void addNewWord(String word){
@@ -185,11 +190,11 @@ public class DatabaseQueryManager {
         executeQuery(query);
     }
 
-    public static void deleteWordWithTranslation(WordAndTranslation wordAndTranslation){
+    public static DatabaseResponse deleteWordWithTranslation(WordAndTranslation wordAndTranslation){
         WordAndTranslationRowNumbers wordAndTranslationRowNumbers = getWordAndTranslationRowsNumbers(wordAndTranslation);
 
         if(wordAndTranslationRowNumbers == null){
-            return;
+            return DatabaseResponse.DB_NOT_FOUND;
         }
 
         String deleteTranslationQuery = String.format("DELETE FROM TLUMACZENIE WHERE ROWID = %d;", wordAndTranslationRowNumbers.gettranslationRowNumber());
@@ -201,10 +206,16 @@ public class DatabaseQueryManager {
         if(numberOfWordTranslations == 1){
             executeQuery(deleteWordQuery);
         }
+
+        return DatabaseResponse.DB_OK;
     }
 
-    public static void changeWordWithTranslation(WordAndTranslation oldWordAndTranslation, WordAndTranslation newWordAndTranslation) {
+    public static DatabaseResponse changeWordWithTranslation(WordAndTranslation oldWordAndTranslation, WordAndTranslation newWordAndTranslation) {
         WordAndTranslationRowNumbers wordAndTranslationRowNumbers = getWordAndTranslationRowsNumbers(oldWordAndTranslation);
+
+        if(wordAndTranslationRowNumbers == null){
+            return DatabaseResponse.DB_NOT_FOUND;
+        }
 
         String changeWordQuery = String.format("UPDATE SLOWO SET slowo = '%s' WHERE ROWID = %d;",
                 newWordAndTranslation.getWord(), wordAndTranslationRowNumbers.getWordRowNumber());
@@ -213,6 +224,7 @@ public class DatabaseQueryManager {
 
         executeQuery(changeWordQuery);
         executeQuery(changeTranslationQuery);
+        return DatabaseResponse.DB_OK;
     }
 
     public static int getWordNumberOfTranslations(String word){
