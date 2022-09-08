@@ -1,13 +1,16 @@
 package com.arek.controllers;
 
 import com.arek.clock_utils.ClockManager;
-import com.arek.language_learning_app.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventType;
+import com.arek.language_learning_app.AppOptions;
+import com.arek.language_learning_app.Languages;
+import com.arek.language_learning_app.TranslationOrder;
+import com.arek.language_learning_app.WordAndTranslationsManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -22,12 +25,10 @@ public class MainDashboardController implements Initializable {
     private Languages language;
     private TranslationOrder translationOrder;
     private ClockManager clockManager;
-    @FXML
+
     private AppOptions options;
 
     @FXML private AddNewWordsController addNewWordsController;
-    @FXML private MergeDatabasesController mergeDatabasesController;
-    @FXML private SpanishAccentsBoxController spanishAccentsBoxController;
 
     @FXML private Label wordLabel, messageLabel, translationOrderLabel, clockLabel;
     @FXML private TextField translationField;
@@ -107,8 +108,6 @@ public class MainDashboardController implements Initializable {
         } else{
             setMessageLabel(Color.RED, "NIE OK!!!");
         }
-
-        translationField.setText("");
     }
 
     @FXML
@@ -117,15 +116,12 @@ public class MainDashboardController implements Initializable {
 
         if(translationOrder == TranslationOrder.NORMAL){
             translationOrder = TranslationOrder.REVERSE;
-            wordAndTranslationsManager.changeTranslationOrder(translationOrder);
-            updateTranslationOrderLabel();
-            loadWordLabel();
         } else{
             translationOrder = TranslationOrder.NORMAL;
-            wordAndTranslationsManager.changeTranslationOrder(translationOrder);
-            updateTranslationOrderLabel();
-            loadWordLabel();
         }
+        wordAndTranslationsManager.changeTranslationOrder(translationOrder);
+        updateTranslationOrderLabel();
+        loadWordLabel();
     }
 
     @FXML
@@ -202,9 +198,8 @@ public class MainDashboardController implements Initializable {
         options.setLastFocusedTextField(translationField);
 
         //listen last caret position before focus lost
-        translationField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            options.setLastFocusedTextFieldCaretPosition(translationField.getCaretPosition());
-        });
+        translationField.focusedProperty().addListener((observable, oldValue, newValue) ->
+                options.setLastFocusedTextFieldCaretPosition(translationField.getCaretPosition()));
     }
 
 }
