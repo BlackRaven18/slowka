@@ -18,9 +18,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="470.0" prefWidth="720.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.MainDashboardController">
+<TabPane fx:id="mainDashboardView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="470.0" prefWidth="720.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek.controllers.MainDashboardController">
   <tabs>
-    <Tab fx:id="mainDashboardView" onSelectionChanged="#onTranslationTabChange" text="Tłumaczenie">
+    <Tab onSelectionChanged="#onTranslationTabChange" text="Tłumaczenie">
          <content>
             <BorderPane>
                <center>
@@ -71,7 +71,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                              <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" onMouseClicked="#setTranslationFieldAsLastFocusedTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

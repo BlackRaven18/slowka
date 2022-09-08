@@ -71,7 +71,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                              <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" onMouseClicked="#setTranslationFieldAsLastFocusedTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

@@ -2,6 +2,8 @@ package com.arek.controllers;
 
 import com.arek.clock_utils.ClockManager;
 import com.arek.language_learning_app.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,9 +22,12 @@ public class MainDashboardController implements Initializable {
     private Languages language;
     private TranslationOrder translationOrder;
     private ClockManager clockManager;
+    @FXML
+    private AppOptions options;
 
     @FXML private AddNewWordsController addNewWordsController;
     @FXML private MergeDatabasesController mergeDatabasesController;
+    @FXML private SpanishAccentsBoxController spanishAccentsBoxController;
 
     @FXML private Label wordLabel, messageLabel, translationOrderLabel, clockLabel;
     @FXML private TextField translationField;
@@ -31,8 +36,7 @@ public class MainDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
+        options = AppOptions.getInstance();
         language = Languages.SPANISH;
         translationOrder = TranslationOrder.NORMAL;
         wordAndTranslationsManager = new WordAndTranslationsManager(language, translationOrder);
@@ -44,6 +48,10 @@ public class MainDashboardController implements Initializable {
 
         clockManager = ClockManager.getInstance();
         clockManager.prepareClock(clockLabel, startClockButton, stopClockButton);
+
+        //set focus on translationField when app is running
+        translationField.requestFocus();
+        setTranslationFieldAsLastFocusedTextField();
 
     }
 
@@ -186,6 +194,17 @@ public class MainDashboardController implements Initializable {
     private void setMessageLabel(Color color, String text){
         messageLabel.setTextFill(color);
         messageLabel.setText(text);
+    }
+
+    @FXML
+    public void setTranslationFieldAsLastFocusedTextField(){
+        //set as last focused text field
+        options.setLastFocusedTextField(translationField);
+
+        //listen last caret position before focus lost
+        translationField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            options.setLastFocusedTextFieldCaretPosition(translationField.getCaretPosition());
+        });
     }
 
 }

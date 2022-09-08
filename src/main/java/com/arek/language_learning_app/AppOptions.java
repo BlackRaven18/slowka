@@ -1,6 +1,7 @@
 package com.arek.language_learning_app;
 
 import com.arek.clock_utils.Time;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
 import java.io.*;
@@ -28,6 +29,9 @@ public final class AppOptions {
 
     private int minAppWidth;
     private int minAppHeight;
+
+    private TextField lastFocusedTextField;
+    private int lastFocusedTextFieldCaretPosition;
 
     private AppOptions(){
         readOptionsFromFile();
@@ -137,5 +141,21 @@ public final class AppOptions {
 
     public void setClockSeconds(long clockSeconds) {
         this.clockSeconds = clockSeconds;
+    }
+
+    public TextField getLastFocusedTextField() {
+        return lastFocusedTextField;
+    }
+
+    public void setLastFocusedTextField(TextField lastFocusedTextField) {
+        this.lastFocusedTextField = lastFocusedTextField;
+    }
+
+    public int getLastFocusedTextFieldCaretPosition() {
+        return lastFocusedTextFieldCaretPosition;
+    }
+
+    public void setLastFocusedTextFieldCaretPosition(int lastFocusedTextFieldCaretPosition) {
+        this.lastFocusedTextFieldCaretPosition = lastFocusedTextFieldCaretPosition;
     }
 }

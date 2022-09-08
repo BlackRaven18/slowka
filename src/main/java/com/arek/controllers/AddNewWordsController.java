@@ -17,6 +17,9 @@ import java.util.ResourceBundle;
 
 public class AddNewWordsController implements Initializable {
 
+    @FXML private SpanishAccentsBoxController spanishAccentsBoxController;
+
+
 
     @FXML private Label messageLabel;
     @FXML private MenuButton selectLanguageMenu;
