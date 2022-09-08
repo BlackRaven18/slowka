@@ -188,6 +188,10 @@ public class DatabaseQueryManager {
     public static void deleteWordWithTranslation(WordAndTranslation wordAndTranslation){
         WordAndTranslationRowNumbers wordAndTranslationRowNumbers = getWordAndTranslationRowsNumbers(wordAndTranslation);
 
+        if(wordAndTranslationRowNumbers == null){
+            return;
+        }
+
         String deleteTranslationQuery = String.format("DELETE FROM TLUMACZENIE WHERE ROWID = %d;", wordAndTranslationRowNumbers.gettranslationRowNumber());
         String deleteWordQuery = String.format("DELETE FROM SLOWO WHERE ROWID = %d;", wordAndTranslationRowNumbers.getWordRowNumber());
 
@@ -212,7 +216,6 @@ public class DatabaseQueryManager {
     }
 
     public static int getWordNumberOfTranslations(String word){
-        int numberOfTranslations = -1;
 
         String query = String.format("SELECT COUNT(*)" +
                 " FROM SLOWO sl, TLUMACZENIE tl" +
@@ -232,6 +235,10 @@ public class DatabaseQueryManager {
                 wordAndTranslation.getWord(), wordAndTranslation.getTranslation());
 
         QueryResult queryResult = getQueryResult(query);
+
+        if(queryResult.isEmpty()) {
+            return null;
+        }
 
         return new WordAndTranslationRowNumbers(Integer.parseInt(queryResult.getQueryLine(0).get(0)),
                 Integer.parseInt(queryResult.getQueryLine(0).get(1)));

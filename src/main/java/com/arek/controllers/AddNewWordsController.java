@@ -2,6 +2,7 @@ package com.arek.controllers;
 
 import com.arek.database_utils.DatabaseQueryManager;
 import com.arek.database_utils.WordAndTranslation;
+import com.arek.language_learning_app.AppOptions;
 import com.arek.language_learning_app.TranslationOrder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,9 +18,7 @@ import java.util.ResourceBundle;
 
 public class AddNewWordsController implements Initializable {
 
-    @FXML private SpanishAccentsBoxController spanishAccentsBoxController;
-
-
+   private AppOptions options;
 
     @FXML private Label messageLabel;
     @FXML private MenuButton selectLanguageMenu;
@@ -43,6 +42,8 @@ public class AddNewWordsController implements Initializable {
     }
 
     private void initiateWordsAndTranslationsTableView(){
+        options = AppOptions.getInstance();
+
         wordsAndTranslationsTable.getItems().clear();
         ArrayList<WordAndTranslation> wordAndTranslationList = DatabaseQueryManager.getWordsAndTranslationsAsList(TranslationOrder.NORMAL);
 
@@ -156,5 +157,25 @@ public class AddNewWordsController implements Initializable {
     private void setMessageLabel(Color color, String text){
         messageLabel.setTextFill(color);
         messageLabel.setText(text);
+    }
+
+    @FXML
+    public void setWordFieldAsLastFocusedTextField(){
+        //set as last focused text field
+        options.setLastFocusedTextField(wordField);
+
+        //listen last caret position before focus lost
+        wordField.focusedProperty().addListener((observable, oldValue, newValue) ->
+                options.setLastFocusedTextFieldCaretPosition(wordField.getCaretPosition()));
+    }
+
+    @FXML
+    public void setTranslationFieldAsLastFocusedTextField(){
+        //set as last focused text field
+        options.setLastFocusedTextField(translationField);
+
+        //listen last caret position before focus lost
+        translationField.focusedProperty().addListener((observable, oldValue, newValue) ->
+                options.setLastFocusedTextFieldCaretPosition(translationField.getCaretPosition()));
     }
 }

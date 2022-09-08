@@ -60,11 +60,17 @@
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
                               </Label>
                               <Label text="Tłumaczenie" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
                               </Label>
                               <Label fx:id="wordLabel" text="el hombre" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <font>
@@ -80,11 +86,12 @@
                                  </GridPane.margin>
                               </TextField>
                            </children>
+                           <padding>
+                              <Insets bottom="30.0" />
+                           </padding>
                         </GridPane>
-                        <HBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="720.0">
-                            <fx:include fx:id="spanishAccentsBox" source="spanish-accents-box.fxml" />
-                        </HBox>
-                        <Button mnemonicParsing="false" onAction="#checkIfCorrect" text="Sprawdź" />
+                         <fx:include source="spanish-accents-box.fxml" />
+                                    <Button mnemonicParsing="false" onAction="#checkIfCorrect" text="Sprawdź" />
                         <Label fx:id="messageLabel" text="OK!">
                            <VBox.margin>
                               <Insets top="10.0" />

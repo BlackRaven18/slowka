@@ -158,4 +158,9 @@ public final class AppOptions {
     public void setLastFocusedTextFieldCaretPosition(int lastFocusedTextFieldCaretPosition) {
         this.lastFocusedTextFieldCaretPosition = lastFocusedTextFieldCaretPosition;
     }
+
+    public void clearLastFocusedTextFieldAndCaretPosition(){
+        lastFocusedTextField = null;
+        lastFocusedTextFieldCaretPosition = 0;
+    }
 }

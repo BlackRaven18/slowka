@@ -142,20 +142,21 @@ public class MainDashboardController implements Initializable {
     }
 
     @FXML
-    public void onAddWordsTabChange(){
-        clockManager.stopClock();
-        addNewWordsController.restartTab();
-
-    }
-
-    @FXML
     public void onTranslationTabChange(){
         if(wordAndTranslationsManager != null) {
             wordAndTranslationsManager.selectSpanishLanguage();
             wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.NORMAL);
             updateSelectLanguageMenu();
             loadWordLabel();
+            options.clearLastFocusedTextFieldAndCaretPosition();
         }
+    }
+
+    @FXML
+    public void onAddWordsTabChange(){
+        clockManager.stopClock();
+        addNewWordsController.restartTab();
+        options.clearLastFocusedTextFieldAndCaretPosition();
     }
 
     @FXML
