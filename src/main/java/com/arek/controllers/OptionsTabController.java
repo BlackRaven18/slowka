@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class OptionsController implements Initializable {
+public class OptionsTabController implements Initializable {
 
     AppOptions options;
 

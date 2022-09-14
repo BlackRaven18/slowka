@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class AddNewWordsController implements Initializable {
+public class AddNewWordsTabController implements Initializable {
 
    private AppOptions options;
 

@@ -16,7 +16,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MergeDatabasesController implements Initializable {
+public class MergeDatabasesTabController implements Initializable {
 
     private FileChooser fileChooser;
     private File databaseFile;
