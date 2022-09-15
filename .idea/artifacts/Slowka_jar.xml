@@ -3,14 +3,16 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Slowka_jar</output-path>
     <root id="archive" name="Slowka.jar">
       <element id="module-output" name="Slowka" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/controlsfx/controlsfx/11.1.0/controlsfx-11.1.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/11.0.2/javafx-controls-11.0.2-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/11.0.2/javafx-controls-11.0.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/11.0.2/javafx-base-11.0.2-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/11.0.2/javafx-graphics-11.0.2-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/11.0.2/javafx-base-11.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/11.0.2/javafx-fxml-11.0.2-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/dustinredmond/fxtrayicon/FXTrayIcon/3.3.0/FXTrayIcon-3.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/xerial/sqlite-jdbc/3.39.2.0/sqlite-jdbc-3.39.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/controlsfx/controlsfx/11.1.0/controlsfx-11.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/11.0.2/javafx-fxml-11.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/11.0.2/javafx-base-11.0.2-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/11.0.2/javafx-graphics-11.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/11.0.2/javafx-base-11.0.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="D:/JavaFX JDK/javafx-sdk-18.0.2/lib/javafx-swt.jar" path-in-jar="/" />
       <element id="extracted-dir" path="D:/JavaFX JDK/javafx-sdk-18.0.2/lib/javafx.web.jar" path-in-jar="/" />
       <element id="extracted-dir" path="D:/JavaFX JDK/javafx-sdk-18.0.2/lib/javafx.base.jar" path-in-jar="/" />
@@ -19,8 +21,9 @@
       <element id="extracted-dir" path="D:/JavaFX JDK/javafx-sdk-18.0.2/lib/javafx.swing.jar" path-in-jar="/" />
       <element id="extracted-dir" path="D:/JavaFX JDK/javafx-sdk-18.0.2/lib/javafx.controls.jar" path-in-jar="/" />
       <element id="extracted-dir" path="D:/JavaFX JDK/javafx-sdk-18.0.2/lib/javafx.graphics.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/11.0.2/javafx-fxml-11.0.2-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/11.0.2/javafx-fxml-11.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/11.0.2/javafx-controls-11.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/11.0.2/javafx-controls-11.0.2-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/JavaFXTrayIcon library/FXTrayIcon-3.3.0.jar" path-in-jar="/" />
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/api-ms-win-core-console-l1-1-0.dll" />
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/api-ms-win-core-console-l1-2-0.dll" />
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/api-ms-win-core-datetime-l1-1-0.dll" />
@@ -78,8 +81,6 @@
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/ucrtbase.dll" />
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/vcruntime140.dll" />
       <element id="file-copy" path="D:/JavaFX JDK/javafx-sdk-18.0.2/bin/vcruntime140_1.dll" />
-      <element id="file-copy" path="D:/JavaFXTrayIcon library/FXTrayIcon-3.3.0.jar" />
-      <element id="file-copy" path="$PROJECT_DIR$/icon.png" />
     </root>
   </artifact>
 </component>
