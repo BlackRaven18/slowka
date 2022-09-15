@@ -12,9 +12,6 @@ import java.util.ResourceBundle;
 
 public class MainDashboardController implements Initializable {
 
-
-
-
     @FXML private TranslationTabController translationTabController;
     @FXML private AddNewWordsTabController addNewWordsTabController;
     @FXML private MergeDatabasesTabController mergeDatabasesTabController;
@@ -23,7 +20,6 @@ public class MainDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
     }
 
