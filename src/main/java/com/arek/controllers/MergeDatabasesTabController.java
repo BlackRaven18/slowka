@@ -35,6 +35,10 @@ public class MergeDatabasesTabController implements Initializable {
         language = Languages.SPANISH;
     }
 
+    public void resetTab(){
+        selectSpanishLanguage();
+    }
+
     @FXML
     public void addDatabaseFile(){
         databaseFile = fileChooser.showOpenDialog(Main.getMainStage());

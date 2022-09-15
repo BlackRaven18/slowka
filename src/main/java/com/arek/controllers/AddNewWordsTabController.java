@@ -37,7 +37,7 @@ public class AddNewWordsTabController implements Initializable {
         initiateWordsAndTranslationsTableView();
     }
 
-    public void restartTab(){
+    public void resetTab(){
         messageLabel.setText("");
         selectSpanishLanguage();
     }

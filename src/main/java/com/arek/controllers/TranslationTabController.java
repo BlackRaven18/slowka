@@ -53,11 +53,20 @@ public class TranslationTabController implements Initializable {
         setTranslationFieldAsLastFocusedTextField();
     }
 
-    public void loadWordLabel(){
+    public void resetTab(){
+        if(wordAndTranslationsManager != null){
+            wordAndTranslationsManager.selectSpanishLanguage();
+            wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.NORMAL);
+            updateSelectLanguageMenu();
+            loadWordLabel();
+        }
+    }
+
+    private void loadWordLabel(){
         wordLabel.setText(wordAndTranslationsManager.getRandomWord());
     }
 
-    public void updateSelectLanguageMenu(){
+    private void updateSelectLanguageMenu(){
         switch (wordAndTranslationsManager.getSelectedLanguage()){
             case SPANISH:
                 selectLanguageMenu.setText("Hiszpański");

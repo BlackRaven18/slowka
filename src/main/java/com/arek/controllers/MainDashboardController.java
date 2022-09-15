@@ -18,40 +18,31 @@ public class MainDashboardController implements Initializable {
     @FXML private OptionsTabController optionsTabController;
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
 
     @FXML
-    public void onTranslationTabChange(){
-        WordAndTranslationsManager wordAndTranslationsManager = translationTabController.getWordAndTranslationsManager();
-        if(wordAndTranslationsManager != null) {
-            wordAndTranslationsManager.selectSpanishLanguage();
-            wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.NORMAL);
-            translationTabController.updateSelectLanguageMenu();
-            translationTabController.loadWordLabel();
-            AppOptions.getInstance().clearLastFocusedTextFieldAndCaretPosition();
-        }
+    public void onTranslationTabChange() {
+        translationTabController.resetTab();
+        AppOptions.getInstance().clearLastFocusedTextFieldAndCaretPosition();
     }
 
     @FXML
     public void onAddWordsTabChange(){
-        ClockManager.getInstance().stopClock();
-        addNewWordsTabController.restartTab();
+        addNewWordsTabController.resetTab();
         AppOptions.getInstance().clearLastFocusedTextFieldAndCaretPosition();
     }
 
     @FXML
     public void onMergeDatabasesTabChange(){
-        onAddWordsTabChange();
-        onTranslationTabChange();
+        mergeDatabasesTabController.resetTab();
     }
 
     @FXML
     public void onOptionsTabChange(){
-        ClockManager.getInstance().stopClock();
     }
 
 
