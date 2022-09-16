@@ -12,6 +12,9 @@ import java.util.StringTokenizer;
 @SuppressWarnings("unused")
 public final class AppOptions {
 
+    public static final int FRAME_EXTRA_WIDTH = 14;
+    public static final int FRAME_EXTRA_HEIGHT = 38;
+
     private static AppOptions instance;
 
     private final File optionsFile = new File("options.txt");
