@@ -32,9 +32,6 @@ public class WordAndTranslationsManager {
             case ENGLISH:
                 DatabaseQueryManager.changeToEnglish();
                 break;
-            default:
-                DatabaseQueryManager.changeToSpanish();
-                break;
         }
 
         wordsAndTranslations = DatabaseQueryManager.getWordsAndTranslations(translationOrder);
@@ -117,5 +114,14 @@ public class WordAndTranslationsManager {
 
     public void setSelectedLanguage(Languages selectedLanguage) {
         this.selectedLanguage = selectedLanguage;
+    }
+
+    public String getWordTranslations(String word){
+        ArrayList<String> translations = wordsAndTranslations.get(word);
+        StringBuilder translationsList = new StringBuilder();
+        for(String translation : translations){
+            translationsList.append(translation).append("\n");
+        }
+        return translationsList.toString();
     }
 }

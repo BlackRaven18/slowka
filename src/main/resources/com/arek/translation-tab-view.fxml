@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -70,6 +71,9 @@
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <tooltip>
+                        <Tooltip fx:id="wordLabelTooltip" text="tooltip text&#10;" />
+                     </tooltip>
                   </Label>
                   <TextField fx:id="translationField" onKeyPressed="#ifEnterPressedThenCheckIfCorrect" onMouseClicked="#setTranslationFieldAsLastFocusedTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <font>

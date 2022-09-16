@@ -7,13 +7,11 @@ import com.arek.language_learning_app.TranslationOrder;
 import com.arek.language_learning_app.WordAndTranslationsManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,8 +25,8 @@ public class TranslationTabController implements Initializable {
 
     private AppOptions options;
 
-    @FXML
-    private Label wordLabel, messageLabel, translationOrderLabel, clockLabel;
+    @FXML private Label wordLabel, messageLabel, translationOrderLabel, clockLabel;
+    @FXML private Tooltip wordLabelTooltip;
     @FXML private TextField translationField;
     @FXML private MenuButton selectLanguageMenu;
     @FXML private Button startClockButton, stopClockButton;
@@ -41,6 +39,7 @@ public class TranslationTabController implements Initializable {
         wordAndTranslationsManager = new WordAndTranslationsManager(language, translationOrder);
 
         loadWordLabel();
+        wordLabelTooltip.setShowDelay(Duration.seconds(0.2));
         updateTranslationOrderLabel();
 
         messageLabel.setText("");
@@ -64,6 +63,11 @@ public class TranslationTabController implements Initializable {
 
     private void loadWordLabel(){
         wordLabel.setText(wordAndTranslationsManager.getRandomWord());
+        loadWordLabelTooltip();
+    }
+
+    private void loadWordLabelTooltip(){
+        wordLabelTooltip.setText(wordAndTranslationsManager.getWordTranslations(wordLabel.getText()));
     }
 
     private void updateSelectLanguageMenu(){
