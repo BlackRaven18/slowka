@@ -8,7 +8,7 @@
   <tabs>
     <Tab onSelectionChanged="#onTranslationTabChange" text="Tłumaczenie">
         <content>
-            <fx:include fx:id="translationTab" source="translation-tab-view.fxml"/>
+            <fx:include fx:id="translationTab" source="translation-tab-view.fxml" />
         </content>
     </Tab>
     <Tab onSelectionChanged="#onAddWordsTabChange" text="Dodaj słówka">
@@ -19,6 +19,11 @@
         <content>
           <fx:include fx:id="mergeDatabasesTab" source="merge-databases-tab-view.fxml" />
         </content>
+      </Tab>
+      <Tab text="Utwórz kopie bazy słówek">
+          <content>
+              <fx:include fx:id="databaseBackupTab" source="database-backup-tab-view.fxml" />
+          </content>
       </Tab>
       <Tab onSelectionChanged="#onOptionsTabChange" text="Opcje">
       <content>

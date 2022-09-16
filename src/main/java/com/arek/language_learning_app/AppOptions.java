@@ -16,7 +16,7 @@ public final class AppOptions {
 
     private final File optionsFile = new File("options.txt");
 
-    public final String APP_VERSION = "v1.1";
+    public final String APP_VERSION = "v1.2";
     public final String APP_TITLE = "Słówka " + APP_VERSION;
     public final Image APP_ICON = new Image("file:icon.png");
     public final File APP_TRAY_ICON = new File("icon.png");

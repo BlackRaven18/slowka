@@ -57,7 +57,7 @@ public class MergeDatabasesTabController implements Initializable {
     public void mergeDatabases(){
 
         if(databaseFile != null){
-            DatabaseBackupManager.makeCopy();
+            DatabaseBackupManager.makeBackup(null, true);
             DatabaseMergeManager databaseMergeManager = new DatabaseMergeManager(language, databaseFile);
 
             databaseMergeManager.mergeDatabases();

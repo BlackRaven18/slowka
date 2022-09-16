@@ -107,6 +107,10 @@ public class AddNewWordsTabController implements Initializable {
             setMessageLabel(Color.GREEN, "Dodano nowe słówko");
             wordField.setText("");
             translationField.setText("");
+
+            wordField.requestFocus();
+            setWordFieldAsLastFocusedTextField();
+
         }else {
             setMessageLabel(Color.BLACK, "Pola nie mogą być puste!");
         }
@@ -165,10 +169,25 @@ public class AddNewWordsTabController implements Initializable {
     }
 
     @FXML
-    public void addWordWhenEnterPressed(KeyEvent event){
+    public void handleKeyEvents(KeyEvent event){
+        //add new word when enter is pressed
         if(event.getCode().equals(KeyCode.ENTER)){
             wordField.requestFocus();
             addNewWord();
+            return;
+        }
+
+        // select last focused text field
+        if(event.getCode().equals(KeyCode.TAB)){
+            if(wordField.isFocused()){
+                setWordFieldAsLastFocusedTextField();
+                return;
+            }
+
+            if(translationField.isFocused()){
+                setTranslationFieldAsLastFocusedTextField();
+                return;
+            }
         }
     }
 
