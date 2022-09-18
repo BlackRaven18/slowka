@@ -1,6 +1,7 @@
 package com.arek.clock_utils;
 
 import com.arek.language_learning_app.AppOptions;
+import com.arek.language_learning_app.Main;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -105,9 +106,16 @@ public class ClockManager {
             @Override
             public void run() {
                 Platform.runLater(() ->{
+
+                    //setting last window position
+                    stage.setX(AppOptions.getInstance().getAppX());
+                    stage.setY(AppOptions.getInstance().getAppY());
+
                     // showing window from being minimized
-                    stage.show();
                     stage.setIconified(false);
+                    stage.show();
+
+
                 });
             }
         };

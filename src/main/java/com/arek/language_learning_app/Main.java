@@ -42,6 +42,10 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
+        //updating app x and y position on screen
+        stage.xProperty().addListener((obs, oldVal, newVal) -> options.setAppX((double)newVal));
+        stage.yProperty().addListener((obs, oldVal, newVal) -> options.setAppY((double)newVal));
+
 //        //changing setting when app is resized
 //        ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
 //                System.out.println("Height: " + stage.getHeight() + " Width: " + stage.getWidth());

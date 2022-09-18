@@ -24,6 +24,9 @@ public final class AppOptions {
     public final Image APP_ICON = new Image("file:icon.png");
     public final File APP_TRAY_ICON = new File("icon.png");
 
+    private double appX;
+    private double appY;
+
     private long clockHours;
     private long clockMinutes;
     private long clockSeconds;
@@ -38,6 +41,14 @@ public final class AppOptions {
     private int lastFocusedTextFieldCaretPosition;
 
     private AppOptions(){
+        if(Main.getMainStage() != null){
+            appX = Main.getMainStage().getX();
+            appY = Main.getMainStage().getY();
+        } else{
+            appX = 100;
+            appY = 100;
+        }
+
         readOptionsFromFile();
     }
 
@@ -166,5 +177,21 @@ public final class AppOptions {
     public void clearLastFocusedTextFieldAndCaretPosition(){
         lastFocusedTextField = null;
         lastFocusedTextFieldCaretPosition = 0;
+    }
+
+    public double getAppX() {
+        return appX;
+    }
+
+    public void setAppX(double appX) {
+        this.appX = appX;
+    }
+
+    public double getAppY() {
+        return appY;
+    }
+
+    public void setAppY(double appY) {
+        this.appY = appY;
     }
 }
