@@ -1,5 +1,6 @@
 package com.arek.language_learning_app;
 
+
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
@@ -8,6 +9,7 @@ import java.text.ParsePosition;
 
 public class TextFieldFormatConfigurator {
 
+    public static final DecimalFormat doubleFormat = new DecimalFormat("#.0");
     public static final DecimalFormat intFormat = new DecimalFormat("#");
 
     public void configureNumericTextField(TextField textField, DecimalFormat format){
@@ -22,6 +24,22 @@ public class TextFieldFormatConfigurator {
                 return null;
             }else{
                 return c;
+            }
+        }));
+    }
+
+    public void configureCharacterTextField(TextField textField){
+        textField.setTextFormatter(new TextFormatter<String>((TextFormatter.Change change) -> {
+            String newText = change.getControlNewText();
+            if (newText.length() > 20) {
+                return null;
+            } else {
+                if(!change.getText().isEmpty()) {
+                    if(!Character.isLetter(change.getText().charAt(0))) {
+                        return null;
+                    }
+                }
+                return change ;
             }
         }));
     }
