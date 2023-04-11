@@ -49,7 +49,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="wordField" onKeyPressed="#addWordWhenEnterPressed" onMouseClicked="#setWordFieldAsLastFocusedTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER">
+                        <TextField fx:id="wordField" onKeyPressed="#handleKeyEvents" onMouseClicked="#setWordFieldAsLastFocusedTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -57,7 +57,7 @@
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="translationField" onAction="#setTranslationFieldAsLastFocusedTextField" onKeyPressed="#addWordWhenEnterPressed" onMouseClicked="#setTranslationFieldAsLastFocusedTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <TextField fx:id="translationField" onAction="#setTranslationFieldAsLastFocusedTextField" onKeyPressed="#handleKeyEvents" onMouseClicked="#setTranslationFieldAsLastFocusedTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>

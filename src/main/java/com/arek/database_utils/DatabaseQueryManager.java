@@ -91,12 +91,20 @@ public class DatabaseQueryManager {
         String query = "SELECT MAX(ROWID)FROM SLOWO;";
         QueryResult queryResult = getQueryResult(query);
 
+        if(queryResult.getQueryLine(0).get(0) == null){
+            return 0;
+        }
+
         return Integer.parseInt(queryResult.getQueryLine(0).get(0));
     }
 
     public static int getNewTranslationId(){
         String query = "SELECT MAX(ROWID) FROM TLUMACZENIE;";
         QueryResult queryResult = getQueryResult(query);
+
+        if(queryResult.getQueryLine(0).get(0) == null){
+            return 0;
+        }
 
         return Integer.parseInt(queryResult.getQueryLine(0).get(0));
     }

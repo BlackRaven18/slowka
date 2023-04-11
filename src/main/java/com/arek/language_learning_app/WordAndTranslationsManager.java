@@ -44,6 +44,7 @@ public class WordAndTranslationsManager {
 
     public String getRandomWord(){
         int i;
+        String word;
 
         Random random = new Random();
 
@@ -53,8 +54,15 @@ public class WordAndTranslationsManager {
             loadWordsAndTranslationsKeys();
         }
 
-        i = random.nextInt(wordsAndTranslations.size());
-        return wordsAndTranslationsKeys.get(i);
+        //if database is empty
+        if(wordsAndTranslations.size() > 0){
+            i = random.nextInt(wordsAndTranslations.size());
+            word = wordsAndTranslationsKeys.get(i);
+        } else {
+            word = "";
+        }
+
+        return word;
     }
 
     public boolean checkTranslation(String word, String translation){
@@ -118,6 +126,10 @@ public class WordAndTranslationsManager {
 
     public String getWordTranslations(String word){
         ArrayList<String> translations = wordsAndTranslations.get(word);
+        if(translations == null){
+            return "";
+        }
+
         StringBuilder translationsList = new StringBuilder();
         for(String translation : translations){
             translationsList.append(translation).append("\n");

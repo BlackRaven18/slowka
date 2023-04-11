@@ -12,14 +12,20 @@ import java.util.StringTokenizer;
 @SuppressWarnings("unused")
 public final class AppOptions {
 
+    public static final int FRAME_EXTRA_WIDTH = 14;
+    public static final int FRAME_EXTRA_HEIGHT = 38;
+
     private static AppOptions instance;
 
     private final File optionsFile = new File("options.txt");
 
-    public final String APP_VERSION = "v1.1";
+    public final String APP_VERSION = "v1.2";
     public final String APP_TITLE = "Słówka " + APP_VERSION;
     public final Image APP_ICON = new Image("file:icon.png");
     public final File APP_TRAY_ICON = new File("icon.png");
+
+    private double appX;
+    private double appY;
 
     private long clockHours;
     private long clockMinutes;
@@ -35,6 +41,14 @@ public final class AppOptions {
     private int lastFocusedTextFieldCaretPosition;
 
     private AppOptions(){
+        if(Main.getMainStage() != null){
+            appX = Main.getMainStage().getX();
+            appY = Main.getMainStage().getY();
+        } else{
+            appX = 100;
+            appY = 100;
+        }
+
         readOptionsFromFile();
     }
 
@@ -163,5 +177,21 @@ public final class AppOptions {
     public void clearLastFocusedTextFieldAndCaretPosition(){
         lastFocusedTextField = null;
         lastFocusedTextFieldCaretPosition = 0;
+    }
+
+    public double getAppX() {
+        return appX;
+    }
+
+    public void setAppX(double appX) {
+        this.appX = appX;
+    }
+
+    public double getAppY() {
+        return appY;
+    }
+
+    public void setAppY(double appY) {
+        this.appY = appY;
     }
 }

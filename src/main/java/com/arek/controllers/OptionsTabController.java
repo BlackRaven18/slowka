@@ -117,13 +117,11 @@ public class OptionsTabController implements Initializable {
     private void updateApp(){
         Stage stage = Main.getMainStage();
 
-        int frameExtraWidth = 14;
-        int frameExtraHeight = 38;
-
-        stage.setWidth(options.getPrefAppWidth() + frameExtraWidth);
-        stage.setHeight(options.getPrefAppHeight() + frameExtraHeight);
-        stage.setMinWidth(options.getMinAppWidth() + frameExtraWidth);
-        stage.setMinHeight(options.getMinAppHeight() + frameExtraHeight);
+        stage.setWidth(options.getPrefAppWidth() + AppOptions.FRAME_EXTRA_WIDTH);
+        stage.setHeight(options.getPrefAppHeight() + AppOptions.FRAME_EXTRA_HEIGHT);
+        stage.setMinWidth(options.getMinAppWidth() + AppOptions.FRAME_EXTRA_WIDTH);
+        stage.setMinHeight(options.getMinAppHeight() + AppOptions.FRAME_EXTRA_HEIGHT);
+        stage.centerOnScreen();
     }
 
     private boolean checkIsFieldsAreNotEmpty(){

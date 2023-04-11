@@ -1,7 +1,6 @@
 package com.arek.database_utils;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class DatabaseBackupManager {
 
@@ -11,16 +10,26 @@ public class DatabaseBackupManager {
     private static final String SPANISH_POLISH_DB_FILE = "spanish-polish.db";
     private static final String ENGLISH_POLISH_DB_FILE = "english-polish.db";
 
-    public static void makeCopy(){
-        makeDatabaseCopy(DB_BACKUP_DIRECTORY, SPANISH_POLISH_DB_FILE);
-        makeDatabaseCopy(DB_BACKUP_DESKTOP_DIRECTORY, ENGLISH_POLISH_DB_FILE);
+    public static void makeBackup(File backupDirectory, boolean doDesktopBackup){
 
+        if(backupDirectory != null){
+            String backupDirectoryPath = backupDirectory.getAbsolutePath() + File.separator + "slowka-db-backup";
+            backupDirectory = createBackupDirectory(backupDirectoryPath);
+
+            makeDatabaseCopy(backupDirectory.getAbsolutePath(), SPANISH_POLISH_DB_FILE);
+            makeDatabaseCopy(backupDirectory.getAbsolutePath(), ENGLISH_POLISH_DB_FILE);
+        } else {
+            makeDatabaseCopy(DB_BACKUP_DIRECTORY, SPANISH_POLISH_DB_FILE);
+            makeDatabaseCopy(DB_BACKUP_DIRECTORY, ENGLISH_POLISH_DB_FILE);
+        }
         //desktop copy
-        File desktopDir = new File(String.format("%s", DB_BACKUP_DESKTOP_DIRECTORY));
-        makeDesktopBackupDirectory(desktopDir);
+        if(doDesktopBackup) {
+            File desktopDir = new File(String.format("%s", DB_BACKUP_DESKTOP_DIRECTORY));
+            makeDesktopBackupDirectory(desktopDir);
 
-        makeDatabaseCopy(DB_BACKUP_DESKTOP_DIRECTORY, SPANISH_POLISH_DB_FILE);
-        makeDatabaseCopy(DB_BACKUP_DESKTOP_DIRECTORY, ENGLISH_POLISH_DB_FILE);
+            makeDatabaseCopy(DB_BACKUP_DESKTOP_DIRECTORY, SPANISH_POLISH_DB_FILE);
+            makeDatabaseCopy(DB_BACKUP_DESKTOP_DIRECTORY, ENGLISH_POLISH_DB_FILE);
+        }
 
     }
 
@@ -50,9 +59,21 @@ public class DatabaseBackupManager {
         }
 
         if(desktopFile.mkdirs()){
-            System.out.println("file created");
+            System.out.println("desktop directory created");
         }
 
+    }
+
+    private static File createBackupDirectory(String backupDirectoryPath){
+        File backupFile = new File(backupDirectoryPath);
+        if(backupFile.exists() && backupFile.isDirectory()){
+            return backupFile;
+        }
+
+        if(backupFile.mkdirs()){
+            System.out.println("backup directory created");
+        }
+        return backupFile;
     }
 
 }

@@ -53,10 +53,18 @@ public class TranslationTabController implements Initializable {
     }
 
     public void resetTab(){
+        clockManager.stopClock();
+
         if(wordAndTranslationsManager != null){
             wordAndTranslationsManager.selectSpanishLanguage();
             wordAndTranslationsManager.changeTranslationOrder(TranslationOrder.NORMAL);
+
+            language = Languages.SPANISH;
             updateSelectLanguageMenu();
+
+            translationOrder = TranslationOrder.NORMAL;
+            updateTranslationOrderLabel();
+
             loadWordLabel();
         }
     }

@@ -3,6 +3,7 @@ package com.arek.language_learning_app;
 import com.arek.clock_utils.ClockManager;
 import com.dustinredmond.fxtrayicon.FXTrayIcon;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -33,17 +34,29 @@ public class Main extends Application {
 
 
         stage.setTitle(options.APP_TITLE);
+        stage.setWidth(options.getPrefAppWidth() + AppOptions.FRAME_EXTRA_WIDTH);
+        stage.setHeight(options.getPrefAppHeight() + AppOptions.FRAME_EXTRA_HEIGHT);
         stage.setMinWidth(options.getMinAppWidth());
         stage.setMinHeight(options.getMinAppHeight());
         stage.getIcons().add(options.APP_ICON);
         stage.setScene(scene);
         stage.show();
 
+        //updating app x and y position on screen
+        stage.xProperty().addListener((obs, oldVal, newVal) -> options.setAppX((double)newVal));
+        stage.yProperty().addListener((obs, oldVal, newVal) -> options.setAppY((double)newVal));
+
+//        //changing setting when app is resized
+//        ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
+//                System.out.println("Height: " + stage.getHeight() + " Width: " + stage.getWidth());
+//
+//        stage.widthProperty().addListener(stageSizeListener);
+//        stage.heightProperty().addListener(stageSizeListener);
+
+
         // clock stage
         ClockManager clockManager = ClockManager.getInstance();
         clockManager.setStage(stage);
-
-
     }
 
     @Override
